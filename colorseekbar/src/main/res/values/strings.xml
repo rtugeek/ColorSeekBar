@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ColorSeekBar</string>
+    <array name="colors">
+        <item>#3F51B5</item>
+        <item>#303F9F</item>
+        <item>#FF4081</item>
+    </array>
+</resources>
