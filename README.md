@@ -2,7 +2,7 @@
 
 ### ScreenShot:
 
-
+ ![](https://github.com/rtugeek/ColorSeekBar/blob/master/screenshot/screenshot.gif)
 
 ### Attrs 
 |attr|format|defalut|
