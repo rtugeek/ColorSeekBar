@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         final ColorSeekBar colorSeekBar = (ColorSeekBar) findViewById(R.id.colorSlider);
         final CheckBox showAlphaCheckBox = (CheckBox) findViewById(R.id.checkBox);
         final SeekBar barHeightSeekBar = (SeekBar) findViewById(R.id.seekBar);
-        final SeekBar thumbHightSeekBar = (SeekBar) findViewById(R.id.seekBar2);
+        final SeekBar thumbHeightSeekBar = (SeekBar) findViewById(R.id.seekBar2);
 
 //        colorSeekBar.setMaxValue(100);
 //        colorSeekBar.setColorBarValue(10);
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        thumbHightSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        thumbHeightSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 colorSeekBar.setThumbHeight((float) progress);
