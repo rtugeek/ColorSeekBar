@@ -1,5 +1,6 @@
 #ColorSeekBar
 
+
 ### ScreenShot:
 
  ![](https://github.com/rtugeek/ColorSeekBar/blob/master/screenshot/screenshot.gif)
@@ -18,20 +19,27 @@
 |showAlphaBar|boolean|false|
 
 
+ 
+### Gradle:
 
+[ ![Download](https://api.bintray.com/packages/rtugeek/maven/ColorSeekBar/images/download.svg) ](https://bintray.com/rtugeek/maven/ColorSeekBar/_latestVersion)
+
+```
+  complie 'com.rtugeek.android.colorseekbar:colorseekbar:1.0.0'
+```
+ 
 ##  Usage 
 
 
 ```java
- 
-    colorSeekBar.setMaxValue(100);
-    colorSeekBar.setColors(R.array.material_colors); // material_colors is defalut included in res.color,just use it.
-    colorSeekBar.setColorBarValue(10); //0 - maxValue
-    colorSeekBar.setAlphaBarValue(10); //0-255
-    colorSeekBar.setShowAlphaBar(true); 
-    colorSeekBar.setBarHeight(5); //5dpi 
-    colorSeekBar.setThumbHeight(30); //30dpi
-    colorSeekBar.setBarMargin(10); //set the margin between colorBar and alphaBar 10dpi
+  colorSeekBar.setMaxValue(100);
+  colorSeekBar.setColors(R.array.material_colors); // material_colors is defalut included in res.color,just use it.
+  colorSeekBar.setColorBarValue(10); //0 - maxValue
+  colorSeekBar.setAlphaBarValue(10); //0-255
+  colorSeekBar.setShowAlphaBar(true); 
+  colorSeekBar.setBarHeight(5); //5dpi 
+  colorSeekBar.setThumbHeight(30); //30dpi
+  colorSeekBar.setBarMargin(10); //set the margin between colorBar and alphaBar 10dpi
 ```
 
 
