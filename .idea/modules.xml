@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ColorSeekBar.iml" filepath="$PROJECT_DIR$/ColorSeekBar.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/colorseekbar/lib.iml" filepath="$PROJECT_DIR$/colorseekbar/lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/colorseekbar/colorseekbar.iml" filepath="$PROJECT_DIR$/colorseekbar/colorseekbar.iml" />
     </modules>
   </component>
 </project>

@@ -27,7 +27,7 @@ dependencies {
 }
 def siteUrl = 'https://github.com/rtugeek/ColorSeekBar'      //
 def gitUrl = 'https://github.com/rtugeek/ColorSeekBar.git'   //
-group = "com.rtugeek.android.colorseekbar" // Maven Group ID for the artifact
+group = "com.rtugeek.android" // Maven Group ID for the artifact
 install {
     repositories.mavenInstaller {
         // This generates POM.xml with proper parameters
