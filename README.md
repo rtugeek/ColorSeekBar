@@ -30,7 +30,16 @@
  
 ##  Usage 
 
+XML
+```xml
+  <com.rtugeek.android.colorseekbar.ColorSeekBar
+      android:id="@+id/colorSlider"
+      android:layout_width="match_parent"
+      app:colors="@array/material_colors"
+      android:layout_height="wrap_content" />
+```
 
+JAVA
 ```java
   colorSeekBar.setMaxValue(100);
   colorSeekBar.setColors(R.array.material_colors); // material_colors is defalut included in res.color,just use it.
@@ -42,7 +51,7 @@
   colorSeekBar.setBarMargin(10); //set the margin between colorBar and alphaBar 10dpi
 ```
 
-
+Listener
 ```java
 
   colorSeekBar.setOnColorChangeListener(new ColorSeekBar.OnColorChangeListener() {
