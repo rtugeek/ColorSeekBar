@@ -64,7 +64,7 @@ Listener
 
 **Spread the word**
 
-<a href="https://twitter.com/intent/tweet?text=Check%20out%20the%20awesome%20MPAndroidChart%20library%20on%20Github:%20https://github.com/rtugeek/ColorSeekBar/" target="_blank" title="share to twitter" style="width:100%"><img src="https://github.com/PhilJay/MPAndroidChart/blob/master/design/twitter_icon.png" title="Share on Twitter" width="35" height=35 />
+<a href="https://twitter.com/intent/tweet?text=Check%20out%20the%20ColorSeekBar%20library%20on%20Github:%20https://github.com/rtugeek/ColorSeekBar/" target="_blank" title="share to twitter" style="width:100%"><img src="https://github.com/PhilJay/MPAndroidChart/blob/master/design/twitter_icon.png" title="Share on Twitter" width="35" height=35 />
 <a href="https://plus.google.com/share?url=https://github.com/rtugeek/ColorSeekBar/" target="_blank" title="share to Google+" style="width:100%"><img src="https://github.com/PhilJay/MPAndroidChart/blob/master/design/googleplus_icon.png" title="Share on Google+" width="35" height=35 />
 <a href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/rtugeek/ColorSeekBar/" target="_blank" title="share to facebook" style="width:100%"><img src="https://github.com/PhilJay/MPAndroidChart/blob/master/design/facebook_icon.png" title="Share on Facebook" width="35" height=35 />
 
