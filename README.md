@@ -22,7 +22,7 @@
  
 ### Gradle:
 
-[ ![Download](https://api.bintray.com/packages/rtugeek/maven/ColorSeekBar/images/download.svg) ](https://bintray.com/rtugeek/maven/ColorSeekBar/_latestVersion)
+[ ![Download](https://api.bintray.com/packages/bintray/jcenter/ColorSeekBar/images/download.svg) ](https://bintray.com/bintray/jcenter/ColorSeekBar/_latestVersion)
 
 ```
   complie 'com.rtugeek.android:colorseekbar:1.0.0'
