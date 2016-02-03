@@ -25,7 +25,7 @@
 [ ![Download](https://api.bintray.com/packages/rtugeek/maven/ColorSeekBar/images/download.svg) ](https://bintray.com/rtugeek/maven/ColorSeekBar/_latestVersion)
 
 ```
-  complie 'com.rtugeek.android.colorseekbar:colorseekbar:1.0.0'
+  complie 'com.rtugeek.android:colorseekbar:1.0.0'
 ```
  
 ##  Usage 
