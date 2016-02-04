@@ -1,5 +1,5 @@
 #ColorSeekBar
-
+[ ![Download](https://api.bintray.com/packages/bintray/jcenter/ColorSeekBar/images/download.svg) ](https://bintray.com/bintray/jcenter/ColorSeekBar/_latestVersion)[![API](https://img.shields.io/badge/API-8%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=8)
 
 ### ScreenShot:
 
@@ -22,7 +22,6 @@
  
 ### Gradle:
 
-[ ![Download](https://api.bintray.com/packages/bintray/jcenter/ColorSeekBar/images/download.svg) ](https://bintray.com/bintray/jcenter/ColorSeekBar/_latestVersion)[![API](https://img.shields.io/badge/API-8%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=8)
 
 ```
   complie 'com.rtugeek.android:colorseekbar:1.0.0'
