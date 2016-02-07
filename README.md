@@ -23,7 +23,7 @@
 [ ![Download](https://api.bintray.com/packages/rtugeek/maven/ColorSeekBar/images/download.svg) ](https://bintray.com/rtugeek/maven/ColorSeekBar/_latestVersion)[![API](https://img.shields.io/badge/API-8%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=8)
 
 ```
-  complie 'com.rtugeek.android:colorseekbar:1.0.0'
+  compile 'com.rtugeek.android:colorseekbar:1.0.0'
 ```
  
 ##  Usage 
