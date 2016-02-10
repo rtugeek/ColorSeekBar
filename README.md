@@ -5,7 +5,7 @@
  ![](https://github.com/rtugeek/ColorSeekBar/blob/master/screenshot/screenshot.gif)
 
 ### Attrs 
-|attr|format|defalut|
+|attr|format|default|
 |---|:---|:---:|
 |colors|references||
 |colorBarValue|integer|0|
@@ -20,7 +20,7 @@
 
  
 ### Gradle:
-[ ![Download](https://api.bintray.com/packages/rtugeek/maven/ColorSeekBar/images/download.svg) ](https://bintray.com/rtugeek/maven/ColorSeekBar/_latestVersion)[![API](https://img.shields.io/badge/API-8%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=8)
+[ ![Download](https://api.bintray.com/packages/rtugeek/maven/ColorSeekBar/images/download.svg) ](https://bintray.com/rtugeek/maven/ColorSeekBar/_latestVersion)[![API](https://img.shields.io/badge/API-8%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=8) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ColorSeekBar-green.svg?style=true)](https://android-arsenal.com/details/1/3118)
 
 ```
   compile 'com.rtugeek.android:colorseekbar:1.0.0'
