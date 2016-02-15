@@ -9,7 +9,7 @@
 |---|:---|:---:|
 |colors|references||
 |colorBarValue|integer|0|
-|alphaBarValue|integer|o|
+|alphaBarValue|integer|0|
 |maxValue|integer|100|
 |bgColor|color|TRANSPARENT|
 |barHeight|dimension|2dp|
