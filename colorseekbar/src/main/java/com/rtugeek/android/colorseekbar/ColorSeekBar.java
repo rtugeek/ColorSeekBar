@@ -254,6 +254,7 @@ public class ColorSeekBar extends View {
 			}
 			break;
 		case MotionEvent.ACTION_MOVE:
+			 getParent().requestDisallowInterceptTouchEvent(true);
 			 if(mMovingColorBar){
 				 float value = (x - realLeft) / mBarWidth * mMaxValue;
 				 mColorBarValue =(int)value ;
