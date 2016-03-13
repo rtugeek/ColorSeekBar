@@ -22,8 +22,7 @@
 ### Gradle:
 [![Release](https://jitpack.io/v/rtugeek/colorseekbar.svg)](https://jitpack.io/#rtugeek/colorseekbar) [![API](https://img.shields.io/badge/API-8%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=8) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ColorSeekBar-green.svg?style=true)](https://android-arsenal.com/details/1/3118)
 
-Step 1. Add the JitPack repository to your build file
-Add it in your root build.gradle at the end of repositories:
+Step 1. Add the JitPack repository in your root build.gradle at the end of repositories:
 ```
   allprojects {
 		repositories {
