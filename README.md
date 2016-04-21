@@ -20,10 +20,20 @@
 
  
 ### Gradle:
-[ ![Download](https://api.bintray.com/packages/rtugeek/maven/ColorSeekBar/images/download.svg) ](https://bintray.com/rtugeek/maven/ColorSeekBar/_latestVersion)[![API](https://img.shields.io/badge/API-8%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=8) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ColorSeekBar-green.svg?style=true)](https://android-arsenal.com/details/1/3118)
+[![Release](https://jitpack.io/v/rtugeek/colorseekbar.svg)](https://jitpack.io/#rtugeek/colorseekbar) [![API](https://img.shields.io/badge/API-8%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=8) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ColorSeekBar-green.svg?style=true)](https://android-arsenal.com/details/1/3118)
 
+Step 1. Add the JitPack repository in your root build.gradle at the end of repositories:
 ```
-  compile 'com.rtugeek.android:colorseekbar:1.0.0'
+  allprojects {
+		repositories {
+			...
+			maven { url "https://jitpack.io" }
+		}
+	}
+```
+Step 2. Add the dependency
+```
+  compile 'com.github.rtugeek:ColorSeekBar:1.0.1'
 ```
  
 ##  Usage 
@@ -40,7 +50,7 @@ XML
 JAVA
 ```java
   colorSeekBar.setMaxValue(100);
-  colorSeekBar.setColors(R.array.material_colors); // material_colors is defalut included in res.color,just use it.
+  colorSeekBar.setColors(R.array.material_colors); // material_colors is defalut included in res/color,just use it.
   colorSeekBar.setColorBarValue(10); //0 - maxValue
   colorSeekBar.setAlphaBarValue(10); //0-255
   colorSeekBar.setShowAlphaBar(true); 
