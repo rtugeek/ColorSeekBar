@@ -83,7 +83,7 @@ public class ColorSeekBar extends View {
 		mViewHeight = heightMeasureSpec;
 
 		int speMode = MeasureSpec.getMode(heightMeasureSpec);
-		if(speMode == MeasureSpec.AT_MOST){
+		if(speMode == MeasureSpec.AT_MOST || speMode == MeasureSpec.UNSPECIFIED){
 			if(mIsShowAlphaBar){
 				setMeasuredDimension(mViewWidth,mThumbHeight * 2 +  mBarHeight * 2  + mBarMargin);
 			}else{
