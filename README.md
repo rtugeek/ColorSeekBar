@@ -49,7 +49,7 @@ XML
 
 JAVA
 ```java
-  colorSeekBar.setMaxPosition100);
+  colorSeekBar.setMaxPosition(100);
   colorSeekBar.setColorSeeds(R.array.material_colors); // material_colors is defalut included in res/color,just use it.
   colorSeekBar.setColorBarPosition(10); //0 - maxValue
   colorSeekBar.setAlphaBarPosition(10); //0 - 255
