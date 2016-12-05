@@ -1,6 +1,6 @@
 package com.rtugeek.android.colorseekbardemo;
 
-import android.graphics.Color;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,48 +12,60 @@ import android.widget.TextView;
 import com.rtugeek.android.colorseekbar.ColorSeekBar;
 
 public class MainActivity extends AppCompatActivity {
+    private ColorSeekBar mColorSeekBar;
+    private SharedPreferences sp;
+    private SharedPreferences.Editor spe;
+    private static final String TAG = "ColorSeekBar";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final TextView textView = (TextView)findViewById(R.id.textView);
-        final ColorSeekBar colorSeekBar = (ColorSeekBar) findViewById(R.id.colorSlider);
+
+        sp = getPreferences(MODE_PRIVATE);
+        spe = sp.edit();
+
+
+        final TextView textView = (TextView) findViewById(R.id.textView);
+        mColorSeekBar = (ColorSeekBar) findViewById(R.id.colorSlider);
         final CheckBox showAlphaCheckBox = (CheckBox) findViewById(R.id.checkBox);
         final SeekBar barHeightSeekBar = (SeekBar) findViewById(R.id.seekBar);
         final SeekBar thumbHeightSeekBar = (SeekBar) findViewById(R.id.seekBar2);
 
-//        colorSeekBar.setMaxValue(100);
-//        colorSeekBar.setColorBarValue(10);
-//        colorSeekBar.setAlphaBarValue(10);
-//        colorSeekBar.setShowAlphaBar(true);
-//        colorSeekBar.setBarHeight(5);
-//        colorSeekBar.setThumbHeight(30);
-//        colorSeekBar.setBarMargin(10);
+//        mColorSeekBar.setAlphaBarPosition(10);
+//        mColorSeekBar.setBarMargin(10);
+//        mColorSeekBar.setBarHeight(5);
+//        mColorSeekBar.setColor(0xffffff);
+//        mColorSeekBar.setColorBarPosition(0xffffff);
+//        mColorSeekBar.setColorSeeds(R.array.material_colors);
+//        mColorSeekBar.setMaxPosition(100);
+//        mColorSeekBar.setColorBarPosition(10);
+//        mColorSeekBar.setShowAlphaBar(true);
+//        mColorSeekBar.setThumbHeight(30);
+//        mColorSeekBar.setColorSeeds(R.array.material_colors);
 
-        colorSeekBar.setColors(R.array.material_colors);
-        colorSeekBar.setOnColorChangeListener(new ColorSeekBar.OnColorChangeListener() {
+        mColorSeekBar.setMaxPosition(100);
+        mColorSeekBar.setOnColorChangeListener(new ColorSeekBar.OnColorChangeListener() {
             @Override
-            public void onColorChangeListener(int colorBarValue, int alphaBarValue, int color) {
+            public void onColorChangeListener(int colorBarPosition, int alphaBarPosition, int color) {
                 textView.setTextColor(color);
-
-                Log.i("ColorSeekBar","colorPosition:"+ colorBarValue +"-alphaPosition:"+ alphaBarValue);
-                Log.i("ColorSeekBar","color:" + color);
+                Log.i(TAG, "====colorPosition:" + colorBarPosition + "-alphaPosition:" + alphaBarPosition + "-color:" + color + "====");
             }
         });
+
 
         showAlphaCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                colorSeekBar.setShowAlphaBar(isChecked);
+                mColorSeekBar.setShowAlphaBar(isChecked);
             }
         });
 
         barHeightSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                colorSeekBar.setBarHeight((float) progress);
-                ((TextView)findViewById(R.id.textView2)).setText("barHeight:"+ progress + "dp");
+                mColorSeekBar.setBarHeight((float) progress);
+                ((TextView) findViewById(R.id.textView2)).setText("barHeight:" + progress + "dp");
             }
 
             @Override
@@ -70,8 +82,8 @@ public class MainActivity extends AppCompatActivity {
         thumbHeightSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                colorSeekBar.setThumbHeight((float) progress);
-                ((TextView)findViewById(R.id.textView3)).setText("thumbHeight:"+ progress + "dp");
+                mColorSeekBar.setThumbHeight((float) progress);
+                ((TextView) findViewById(R.id.textView3)).setText("thumbHeight:" + progress + "dp");
             }
 
             @Override
@@ -85,7 +97,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Log.i(TAG, "set color:" + sp.getInt("color", 0));
+        mColorSeekBar.setColor(sp.getInt("color", 0));
+        showAlphaCheckBox.setChecked(sp.getBoolean("showAlpha", false));
+        textView.setTextColor(mColorSeekBar.getColor());
+    }
 
-        textView.setTextColor(colorSeekBar.getColor());
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG, "save color:" + mColorSeekBar.getColor());
+        spe.putInt("color", mColorSeekBar.getColor());
+        spe.putBoolean("showAlpha", mColorSeekBar.isShowAlphaBar());
+        spe.commit();
     }
 }

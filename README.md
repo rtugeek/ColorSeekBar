@@ -7,10 +7,10 @@
 ### Attrs 
 |attr|format|default|
 |---|:---|:---:|
-|colors|references||
-|colorBarValue|integer|0|
-|alphaBarValue|integer|0|
-|maxValue|integer|100|
+|colorSeeds|references||
+|colorBarPosition|integer|0|
+|alphaBarPosition|integer|0|
+|maxPosition|integer|100|
 |bgColor|color|TRANSPARENT|
 |barHeight|dimension|2dp|
 |barMargin|dimension|5dp|
@@ -33,7 +33,7 @@ Step 1. Add the JitPack repository in your root build.gradle at the end of repos
 ```
 Step 2. Add the dependency
 ```
-  compile 'com.github.rtugeek:ColorSeekBar:1.0.2'
+  compile 'com.github.rtugeek:ColorSeekBar:1.1.2'
 ```
  
 ##  Usage 
@@ -49,10 +49,10 @@ XML
 
 JAVA
 ```java
-  colorSeekBar.setMaxValue(100);
-  colorSeekBar.setColors(R.array.material_colors); // material_colors is defalut included in res/color,just use it.
-  colorSeekBar.setColorBarValue(10); //0 - maxValue
-  colorSeekBar.setAlphaBarValue(10); //0-255
+  colorSeekBar.setMaxPosition100);
+  colorSeekBar.setColorSeeds(R.array.material_colors); // material_colors is defalut included in res/color,just use it.
+  colorSeekBar.setColorBarPosition(10); //0 - maxValue
+  colorSeekBar.setAlphaBarPosition(10); //0 - 255
   colorSeekBar.setShowAlphaBar(true); 
   colorSeekBar.setBarHeight(5); //5dpi 
   colorSeekBar.setThumbHeight(30); //30dpi
@@ -64,8 +64,9 @@ Listener
 
   colorSeekBar.setOnColorChangeListener(new ColorSeekBar.OnColorChangeListener() {
             @Override
-            public void onColorChangeListener(int colorBarValue, int alphaBarValue, int color) {
+            public void onColorChangeListener(int colorBarPosition, int alphaBarPosition, int color) {
                 textView.setTextColor(color);
+                //colorSeekBar.getAlphaValue();
             }
   });
 ```
