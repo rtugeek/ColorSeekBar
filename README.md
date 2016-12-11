@@ -33,7 +33,7 @@ Step 1. Add the JitPack repository in your root build.gradle at the end of repos
 ```
 Step 2. Add the dependency
 ```
-  compile 'com.github.rtugeek:ColorSeekBar:1.1.2'
+  compile 'com.github.rtugeek:ColorSeekBar:1.2.2'
 ```
 
 ##  Usage
@@ -43,7 +43,7 @@ XML
   <com.rtugeek.android.colorseekbar.ColorSeekBar
       android:id="@+id/colorSlider"
       android:layout_width="match_parent"
-      app:colors="@array/material_colors"
+      app:colorSeeds="@array/material_colors"
       android:layout_height="wrap_content" />
 ```
 
@@ -69,6 +69,33 @@ Listener
                 //colorSeekBar.getAlphaValue();
             }
   });
+```
+
+** getColor() issue**
+
+1.Activity->onCreate();  
+2.Activity->onResume();  
+3.ColorSeekBar->onMeasure();  
+4.ColorSeekBar->onSizeChanged();  
+5.ColorSeekBar->init();  
+6.ColorSeekBar->onMeasure();  
+7.ColorSeekBar->onDraw();  
+
+getColor() do not work correct until onDraw() method be  invoked;
+
+For this issue ,when onDraw() be invoked at the fisrt time ,ColorSeekBar will invoke OnColorChangeListener();
+
+if you don't want this happen, do:
+```java
+mColorSeekBar.setOnColorChangeListener(new ColorSeekBar.OnColorChangeListener() {
+    @Override
+    public void onColorChangeListener(int colorBarPosition, int alphaBarPosition, int color) {
+        if(!mColorSeekBar.isFirstDraw()){
+          textView.setTextColor(mColorSeekBar.getColor());
+          // or something else;
+        }
+    }
+});
 ```
 
 **Spread the word**
