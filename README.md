@@ -70,8 +70,8 @@ Listener
             }
   });
 ```
-
-** getColor() issue**
+------  
+**getColor() issue**
 
 1.Activity->onCreate();  
 2.Activity->onResume();  
