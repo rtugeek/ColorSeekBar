@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onColorChangeListener(int colorBarPosition, int alphaBarPosition, int color) {
                 textView.setTextColor(color);
-                Log.i(TAG, "====colorPosition:" + colorBarPosition + "-alphaPosition:" + alphaBarPosition + "-color:" + color + "====");
+//                Log.i(TAG, "====colorPosition:" + colorBarPosition + "-alphaPosition:" + alphaBarPosition + "-color:" + color + "====");
             }
         });
 
@@ -97,12 +97,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Log.i(TAG, "set color:" + sp.getInt("color", 0));
-        mColorSeekBar.setColor(sp.getInt("color", 0));
-        showAlphaCheckBox.setChecked(sp.getBoolean("showAlpha", false));
-        textView.setTextColor(mColorSeekBar.getColor());
+//        Log.i(TAG, "set color:" + sp.getInt("color", 0));
+//        mColorSeekBar.setColor(sp.getInt("color", 0));
+//        showAlphaCheckBox.setChecked(sp.getBoolean("showAlpha", false));
+//        textView.setTextColor(mColorSeekBar.getColor());
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(TAG, "onResume");
+    }
 
     @Override
     protected void onDestroy() {

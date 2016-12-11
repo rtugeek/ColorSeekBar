@@ -4,7 +4,7 @@
 
  ![](https://github.com/rtugeek/ColorSeekBar/blob/master/screenshot/screenshot.gif)
 
-### Attrs 
+### Attrs
 |attr|format|default|
 |---|:---|:---:|
 |colorSeeds|references||
@@ -18,9 +18,9 @@
 |showAlphaBar|boolean|false|
 
 
- 
+
 ### Gradle:
-[![Release](https://jitpack.io/v/rtugeek/colorseekbar.svg)](https://jitpack.io/#rtugeek/colorseekbar) [![API](https://img.shields.io/badge/API-8%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=8) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ColorSeekBar-green.svg?style=true)](https://android-arsenal.com/details/1/3118)
+[![Release](https://jitpack.io/v/rtugeek/colorseekbar.svg)](https://jitpack.io/#rtugeek/colorseekbar) [![API](https://img.shields.io/badge/API-9%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=9) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ColorSeekBar-green.svg?style=true)](https://android-arsenal.com/details/1/3118)
 
 Step 1. Add the JitPack repository in your root build.gradle at the end of repositories:
 ```
@@ -35,8 +35,8 @@ Step 2. Add the dependency
 ```
   compile 'com.github.rtugeek:ColorSeekBar:1.1.2'
 ```
- 
-##  Usage 
+
+##  Usage
 
 XML
 ```xml
@@ -53,8 +53,8 @@ JAVA
   colorSeekBar.setColorSeeds(R.array.material_colors); // material_colors is defalut included in res/color,just use it.
   colorSeekBar.setColorBarPosition(10); //0 - maxValue
   colorSeekBar.setAlphaBarPosition(10); //0 - 255
-  colorSeekBar.setShowAlphaBar(true); 
-  colorSeekBar.setBarHeight(5); //5dpi 
+  colorSeekBar.setShowAlphaBar(true);
+  colorSeekBar.setBarHeight(5); //5dpi
   colorSeekBar.setThumbHeight(30); //30dpi
   colorSeekBar.setBarMargin(10); //set the margin between colorBar and alphaBar 10dpi
 ```
@@ -81,14 +81,14 @@ Listener
 
             DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
                     Version 2, December 2004
-   
+
     Copyright (C) 2004 Leon Fu <rtugeek@gmail.com>
-   
+
     Everyone is permitted to copy and distribute verbatim or modified
     copies of this license document, and changing it is allowed as long
     as the name is changed.
-   
+
             DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
     TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
-   
+
      0. You just DO WHAT THE FUCK YOU WANT TO.

@@ -53,8 +53,9 @@ public class ColorSeekBar extends View {
     private int mViewWidth;
     private int mViewHeight;
     private List<Integer> mColors = new ArrayList<>();
-    private int mColorsToInvoke;
+    private int mColorsToInvoke = -1;
     private boolean mInit = false;
+    private boolean mFirstDraw = true;
 
     public ColorSeekBar(Context context) {
         super(context);
@@ -122,6 +123,8 @@ public class ColorSeekBar extends View {
 
         setBackgroundColor(mBackgroundColor);
 
+        init();
+
     }
 
     /**
@@ -181,7 +184,7 @@ public class ColorSeekBar extends View {
         mTransparentBitmap.eraseColor(Color.TRANSPARENT);
         init();
         mInit = true;
-        setColor(mColorsToInvoke);
+        if(mColorsToInvoke != -1) setColor(mColorsToInvoke);
     }
 
 
@@ -196,6 +199,7 @@ public class ColorSeekBar extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        Logger.i("onDraw");
         float colorPosition = (float) mColorBarPosition / mMaxPosition * mBarWidth;
 
         Paint colorPaint = new Paint();
@@ -361,9 +365,17 @@ public class ColorSeekBar extends View {
      * @return
      */
     public int getColor(boolean withAlpha) {
+        //pick mode
         if (mColorBarPosition >= mColors.size()) {
-            return -1;
+            int color = pickColor(mColorBarPosition);
+            if(withAlpha){
+                return color;
+            }else {
+                return Color.argb(getAlphaValue(), Color.red(color), Color.green(color), Color.blue(color));
+            }
         }
+
+        //cache mode
         int color = mColors.get(mColorBarPosition);
 
         if (withAlpha) {
