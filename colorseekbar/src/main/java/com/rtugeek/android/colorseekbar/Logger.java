@@ -8,7 +8,7 @@ import android.util.Log;
  */
 
 class Logger {
-    private static boolean debug = true;
+    private static boolean debug = false;
     private static final String TAG ="ColorSeekBarLib";
     public static void i(String s){
         if(debug) Log.i(TAG,s);

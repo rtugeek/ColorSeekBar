@@ -56,7 +56,6 @@ public class ColorSeekBar extends View {
     private int mColorsToInvoke = -1;
     private boolean mInit = false;
     private boolean mFirstDraw = true;
-
     public ColorSeekBar(Context context) {
         super(context);
         init(context, null, 0, 0);
@@ -123,8 +122,6 @@ public class ColorSeekBar extends View {
 
         setBackgroundColor(mBackgroundColor);
 
-        init();
-
     }
 
     /**
@@ -186,6 +183,7 @@ public class ColorSeekBar extends View {
         mInit = true;
         if(mColorsToInvoke != -1) setColor(mColorsToInvoke);
     }
+
 
 
     private void cacheColors() {
@@ -253,6 +251,15 @@ public class ColorSeekBar extends View {
             canvas.drawCircle(alphaThumbX, alphaThumbY, mThumbHeight / 2, alphaThumbGradientPaint);
         }
 
+        if(mFirstDraw){
+
+            if(mOnColorChangeLister != null){
+                mOnColorChangeLister.onColorChangeListener(mColorBarPosition,mAlphaBarPosition,getColor());
+            }
+
+            mFirstDraw = false;
+        }
+
         super.onDraw(canvas);
     }
 
@@ -313,6 +320,12 @@ public class ColorSeekBar extends View {
             return false;
         }
     }
+
+    public boolean isFirstDraw(){
+        return mFirstDraw;
+    }
+
+
 
     /**
      * @param value

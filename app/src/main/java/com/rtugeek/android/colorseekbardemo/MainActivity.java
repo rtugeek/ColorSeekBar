@@ -26,8 +26,8 @@ public class MainActivity extends AppCompatActivity {
         spe = sp.edit();
 
 
-        final TextView textView = (TextView) findViewById(R.id.textView);
         mColorSeekBar = (ColorSeekBar) findViewById(R.id.colorSlider);
+        final TextView textView = (TextView) findViewById(R.id.textView);
         final CheckBox showAlphaCheckBox = (CheckBox) findViewById(R.id.checkBox);
         final SeekBar barHeightSeekBar = (SeekBar) findViewById(R.id.seekBar);
         final SeekBar thumbHeightSeekBar = (SeekBar) findViewById(R.id.seekBar2);
@@ -48,8 +48,10 @@ public class MainActivity extends AppCompatActivity {
         mColorSeekBar.setOnColorChangeListener(new ColorSeekBar.OnColorChangeListener() {
             @Override
             public void onColorChangeListener(int colorBarPosition, int alphaBarPosition, int color) {
-                textView.setTextColor(color);
-//                Log.i(TAG, "====colorPosition:" + colorBarPosition + "-alphaPosition:" + alphaBarPosition + "-color:" + color + "====");
+                textView.setTextColor(mColorSeekBar.getColor());
+                Log.i(TAG, "===colorPosition:" + colorBarPosition
+                        + "-alphaPosition:" + alphaBarPosition
+                        + "-color:" + color + "===");
             }
         });
 
@@ -97,23 +99,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        Log.i(TAG, "set color:" + sp.getInt("color", 0));
-//        mColorSeekBar.setColor(sp.getInt("color", 0));
-//        showAlphaCheckBox.setChecked(sp.getBoolean("showAlpha", false));
-//        textView.setTextColor(mColorSeekBar.getColor());
+        mColorSeekBar.setColor(sp.getInt("color", 0));
+        showAlphaCheckBox.setChecked(sp.getBoolean("showAlpha", false));
+
     }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.i(TAG, "onResume");
-    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i(TAG, "save color:" + mColorSeekBar.getColor());
         spe.putInt("color", mColorSeekBar.getColor());
         spe.putBoolean("showAlpha", mColorSeekBar.isShowAlphaBar());
         spe.commit();
