@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         mColorSeekBar = (ColorSeekBar) findViewById(R.id.colorSlider);
         final TextView textView = (TextView) findViewById(R.id.textView);
         final CheckBox showAlphaCheckBox = (CheckBox) findViewById(R.id.checkBox);
+        final CheckBox verticalCheckBox = (CheckBox) findViewById(R.id.checkBox2);
         final SeekBar barHeightSeekBar = (SeekBar) findViewById(R.id.seekBar);
         final SeekBar thumbHeightSeekBar = (SeekBar) findViewById(R.id.seekBar2);
 
@@ -62,6 +63,14 @@ public class MainActivity extends AppCompatActivity {
                 mColorSeekBar.setShowAlphaBar(isChecked);
             }
         });
+
+        verticalCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mColorSeekBar.setVertical(isChecked);
+            }
+        });
+
 
         barHeightSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override

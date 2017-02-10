@@ -10,5 +10,6 @@
         <attr name="bgColor" format="color"/>
         <attr name="barMargin" format="dimension"/>
         <attr name="maxPosition" format="integer"/>
+        <attr name="isVertical" format="boolean"/>
     </declare-styleable>
 </resources>
