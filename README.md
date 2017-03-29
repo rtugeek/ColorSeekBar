@@ -84,8 +84,8 @@ Listener
  ![](https://github.com/rtugeek/ColorSeekBar/blob/master/screenshot/vertical.png)
 
 
-** getColor() issue**
-
+## getColor() issue
+Render flow:  
 1.Activity->onCreate();  
 2.Activity->onResume();  
 3.ColorSeekBar->onMeasure();  
