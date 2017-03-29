@@ -16,6 +16,7 @@
 |barMargin|dimension|5dp|
 |thumbHeight|dimension|30dp|
 |showAlphaBar|boolean|false|
+|isVertical|boolean|false|
 
 
 
@@ -33,7 +34,7 @@ Step 1. Add the JitPack repository in your root build.gradle at the end of repos
 ```
 Step 2. Add the dependency
 ```
-  compile 'com.github.rtugeek:ColorSeekBar:1.2.2'
+  compile 'com.github.rtugeek:ColorSeekBar:1.3.1'
 ```
 
 ##  Usage
@@ -71,6 +72,18 @@ Listener
   });
 ```
 
+## Vertical Bar [BETA]
+```xml
+  <com.rtugeek.android.colorseekbar.ColorSeekBar
+      android:id="@+id/colorSlider"
+      android:layout_width="match_parent"
+      app:colorSeeds="@array/material_colors"
+      app:isVertical="true"
+      android:layout_height="wrap_content" />
+```
+ ![](https://github.com/rtugeek/ColorSeekBar/blob/master/screenshot/vertical.png)
+
+
 ** getColor() issue**
 
 1.Activity->onCreate();  
@@ -81,7 +94,7 @@ Listener
 6.ColorSeekBar->onMeasure();  
 7.ColorSeekBar->onDraw();  
 
-getColor() do not work correct until onDraw() method be  invoked;
+getColor() do not work correct until onDraw() method invoked;
 
 For this issue ,when onDraw() be invoked at the fisrt time ,ColorSeekBar will invoke OnColorChangeListener();
 

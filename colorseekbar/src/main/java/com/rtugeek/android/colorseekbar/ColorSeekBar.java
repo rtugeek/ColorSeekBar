@@ -1,6 +1,5 @@
 package com.rtugeek.android.colorseekbar;
 
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -21,6 +20,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class ColorSeekBar extends View {
     private int mBackgroundColor = 0xffffffff;
     private int[] mColorSeeds = new int[]{0xFF000000, 0xFF9900FF, 0xFF0000FF, 0xFF00FF00, 0xFF00FFFF, 0xFFFF0000, 0xFFFF00FF, 0xFFFF6600, 0xFFFFFF00, 0xFFFFFFFF, 0xFF000000};
@@ -36,6 +36,7 @@ public class ColorSeekBar extends View {
     private Bitmap mTransparentBitmap;
     private Rect mColorRect;
     private int mThumbHeight = 20;
+    private float mThumbRadius;
     private int mBarHeight = 2;
     private LinearGradient mColorGradient;
     private Paint mColorRectPaint;
@@ -48,7 +49,6 @@ public class ColorSeekBar extends View {
     private Rect mAlphaRect;
     private int mColorBarPosition;
     private int mAlphaBarPosition;
-    private float mThumbRadius;
     private int mBarMargin = 5;
     private int mPaddingSize;
     private int mViewWidth;
@@ -93,14 +93,28 @@ public class ColorSeekBar extends View {
         Logger.i("onMeasure");
         mViewWidth = widthMeasureSpec;
         mViewHeight = heightMeasureSpec;
-        int speMode = mIsVertical ? MeasureSpec.getMode(widthMeasureSpec) : MeasureSpec.getMode(heightMeasureSpec);
-        if (speMode == MeasureSpec.AT_MOST || speMode == MeasureSpec.UNSPECIFIED) {
-            int barHeight = mIsShowAlphaBar ? mBarHeight * 2 : mBarHeight;
-            int thumbHeight = mIsShowAlphaBar ? mThumbHeight * 2 : mThumbHeight;
-            if (mIsVertical) {
-                setMeasuredDimension(thumbHeight + barHeight + mBarMargin, mViewWidth);
-            } else {
-                setMeasuredDimension(mViewWidth, thumbHeight + barHeight + mBarMargin);
+
+        int widthSpeMode = MeasureSpec.getMode(widthMeasureSpec);
+        int heightSpeMode = MeasureSpec.getMode(heightMeasureSpec);
+
+        int barHeight = mIsShowAlphaBar ? mBarHeight * 2 : mBarHeight;
+        int thumbHeight = mIsShowAlphaBar ? mThumbHeight * 2 : mThumbHeight;
+
+        Logger.i("widthSpeMode:");
+        Logger.spec(widthSpeMode);
+        Logger.i("heightSpeMode:");
+        Logger.spec(heightSpeMode);
+
+        if(isVertical()){
+            if (widthSpeMode == MeasureSpec.AT_MOST || widthSpeMode == MeasureSpec.UNSPECIFIED) {
+                mViewWidth = thumbHeight + barHeight + mBarMargin;
+                setMeasuredDimension(mViewWidth, mViewHeight);
+            }
+
+        }else{
+            if (widthSpeMode == MeasureSpec.AT_MOST || widthSpeMode == MeasureSpec.UNSPECIFIED) {
+                mViewHeight = thumbHeight + barHeight + mBarMargin;
+                setMeasuredDimension(mViewWidth, mViewHeight);
             }
         }
     }
@@ -226,7 +240,6 @@ public class ColorSeekBar extends View {
 
         //draw color bar
         canvas.drawRect(mColorRect, mColorRectPaint);
-
         //draw color bar thumb
         float thumbX = colorPosition + realLeft;
         float thumbY = mColorRect.top + mColorRect.height() / 2;
@@ -477,44 +490,14 @@ public class ColorSeekBar extends View {
     }
 
     private void refreshLayoutParams() {
-        mThumbHeight = mThumbHeight < 2 ? 2 : mThumbHeight;
-        mBarHeight = mBarHeight < 2 ? 2 : mBarHeight;
-
-        int singleHeight = mThumbHeight + mBarHeight;
-        int doubleHeight = mThumbHeight * 2 + mBarHeight * 2 + mBarMargin;
-
-        if (getLayoutParams().height == -2) {
-            if (mIsShowAlphaBar) {
-                getLayoutParams().height = doubleHeight;
-                setLayoutParams(getLayoutParams());
-            } else {
-                getLayoutParams().height = singleHeight;
-                setLayoutParams(getLayoutParams());
-            }
-        } else if (getLayoutParams().height >= 0) {
-            if (mIsShowAlphaBar) {
-                if (mIsVertical) {
-                    getLayoutParams().width = doubleHeight;
-                } else {
-                    getLayoutParams().height = doubleHeight;
-                }
-                setLayoutParams(getLayoutParams());
-            } else {
-                if (mIsVertical) {
-                    getLayoutParams().width = singleHeight;
-                } else {
-                    getLayoutParams().height = singleHeight;
-                }
-                setLayoutParams(getLayoutParams());
-            }
-        }
+        setLayoutParams(getLayoutParams());
     }
 
-    public void setVertical(boolean vertical) {
-        mIsVertical = vertical;
-        refreshLayoutParams();
-        invalidate();
-    }
+//    public void setVertical(boolean vertical) {
+//        mIsVertical = vertical;
+//        refreshLayoutParams();
+//        invalidate();
+//    }
 
     public boolean isVertical() {
         return mIsVertical;
@@ -629,6 +612,7 @@ public class ColorSeekBar extends View {
      */
     public void setThumbHeight(float dp) {
         this.mThumbHeight = dp2px(dp);
+        mThumbRadius = mThumbHeight / 2;
         refreshLayoutParams();
         invalidate();
     }
@@ -640,6 +624,7 @@ public class ColorSeekBar extends View {
      */
     public void setThumbHeightPx(int px) {
         this.mThumbHeight = px;
+        mThumbRadius = mThumbHeight / 2;
         refreshLayoutParams();
         invalidate();
     }
