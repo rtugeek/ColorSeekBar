@@ -1,4 +1,4 @@
-#ColorSeekBar
+# ColorSeekBar
 
 ### ScreenShot:
 
