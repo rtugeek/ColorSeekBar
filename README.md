@@ -34,7 +34,7 @@ Step 1. Add the JitPack repository in your root build.gradle at the end of repos
 ```
 Step 2. Add the dependency
 ```
-  compile 'com.github.rtugeek:ColorSeekBar:1.3.1'
+  compile 'com.github.rtugeek:ColorSeekBar:1.4.2'
 ```
 
 ##  Usage
@@ -94,21 +94,17 @@ Render flow:
 6.ColorSeekBar->onMeasure();  
 7.ColorSeekBar->onDraw();  
 
-getColor() do not work correct until onDraw() method invoked;
-
-For this issue ,when onDraw() be invoked at the fisrt time ,ColorSeekBar will invoke OnColorChangeListener();
-
-if you don't want this happen, do:
+getColor()/getColors()/getColorIndexPosition() do not work correct until onDraw() method invoked.
+So, If you want to get color or something else form ColorSeekBar on Activity.onCreate() function, just do:
 ```java
-mColorSeekBar.setOnColorChangeListener(new ColorSeekBar.OnColorChangeListener() {
-    @Override
-    public void onColorChangeListener(int colorBarPosition, int alphaBarPosition, int color) {
-        if(!mColorSeekBar.isFirstDraw()){
-          textView.setTextColor(mColorSeekBar.getColor());
-          // or something else;
+    mColorSeekBar.setOnInitDoneListener(new ColorSeekBar.OnInitDoneListener() {
+        @Override
+        public void done() {
+            mColorSeekBar.getColorIndexPosition(mColor);
+            //mColorSeekBar.getColors();
+            //mColorSeekBar.getColor();
         }
-    }
-});
+    });
 ```
 
 **Spread the word**

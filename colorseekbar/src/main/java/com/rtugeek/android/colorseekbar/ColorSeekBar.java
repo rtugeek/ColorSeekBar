@@ -57,7 +57,7 @@ public class ColorSeekBar extends View {
     private int mColorsToInvoke = -1;
     private boolean mInit = false;
     private boolean mFirstDraw = true;
-
+    private OnInitDoneListener mOnInitDoneListener;
     public ColorSeekBar(Context context) {
         super(context);
         init(context, null, 0, 0);
@@ -139,7 +139,6 @@ public class ColorSeekBar extends View {
         if (colorsId != 0) mColorSeeds = getColorsById(colorsId);
 
         setBackgroundColor(mBackgroundColor);
-
     }
 
     /**
@@ -286,6 +285,10 @@ public class ColorSeekBar extends View {
             }
 
             mFirstDraw = false;
+
+            if(mOnInitDoneListener != null){
+                mOnInitDoneListener.done();
+            }
         }
 
 
@@ -350,6 +353,10 @@ public class ColorSeekBar extends View {
         }
     }
 
+    /**
+     * @return
+     * @deprecated use {@link #setOnInitDoneListener(OnInitDoneListener)} instead.
+     */
     public boolean isFirstDraw() {
         return mFirstDraw;
     }
@@ -478,7 +485,7 @@ public class ColorSeekBar extends View {
      * @return the color's position in the bar, if not in the bar ,return -1;
      */
     public int getColorIndexPosition(int color) {
-        return mColors.indexOf(color);
+        return mColors.indexOf(Color.argb(255,Color.red(color),Color.green(color),Color.blue(color)));
     }
 
     public List<Integer> getColors() {
@@ -586,6 +593,9 @@ public class ColorSeekBar extends View {
             mOnColorChangeLister.onColorChangeListener(mColorBarPosition, mAlphaBarPosition, getColor());
     }
 
+    public void setOnInitDoneListener(OnInitDoneListener  listener){
+        this.mOnInitDoneListener = listener;
+    }
 
     /**
      * Set color, it must correspond to the value, if not , setColorBarPosition(0);
@@ -643,6 +653,10 @@ public class ColorSeekBar extends View {
 
     public float getColorBarValue() {
         return mColorBarPosition;
+    }
+
+    public interface OnInitDoneListener{
+        void done();
     }
 
 }

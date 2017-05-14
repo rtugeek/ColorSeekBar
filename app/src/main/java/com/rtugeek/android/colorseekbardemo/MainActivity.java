@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.rtugeek.android.colorseekbar.ColorSeekBar;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     private ColorSeekBar mColorSeekBar;
     private SharedPreferences sp;
@@ -25,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
         sp = getPreferences(MODE_PRIVATE);
         spe = sp.edit();
 
-
         mColorSeekBar = (ColorSeekBar) findViewById(R.id.colorSlider);
         final TextView textView = (TextView) findViewById(R.id.textView);
         final CheckBox showAlphaCheckBox = (CheckBox) findViewById(R.id.checkBox);
@@ -36,21 +37,26 @@ public class MainActivity extends AppCompatActivity {
 //        mColorSeekBar.setBarMargin(10);
 //        mColorSeekBar.setBarHeight(5);
 //        mColorSeekBar.setColor(0xffffff);
-//        mColorSeekBar.setColorBarPosition(0xffffff);
-//        mColorSeekBar.setColorSeeds(R.array.material_colors);
-//        mColorSeekBar.setMaxPosition(100);
-//        mColorSeekBar.setColorBarPosition(10);
-//        mColorSeekBar.setShowAlphaBar(true);
-//        mColorSeekBar.setThumbHeight(30);
-//        mColorSeekBar.setColorSeeds(R.array.material_colors);
-
+//        mColorSeekBar.setColorBarPosition(30);
         mColorSeekBar.setMaxPosition(100);
+        mColorSeekBar.setShowAlphaBar(true);
+        mColorSeekBar.setThumbHeight(30);
+        mColorSeekBar.setColorSeeds(R.array.material_colors);
+
+        mColorSeekBar.setOnInitDoneListener(new ColorSeekBar.OnInitDoneListener() {
+            @Override
+            public void done() {
+                Log.i(TAG,"done!");
+            }
+        });
+
         mColorSeekBar.setOnColorChangeListener(new ColorSeekBar.OnColorChangeListener() {
             @Override
             public void onColorChangeListener(int colorBarPosition, int alphaBarPosition, int color) {
                 textView.setTextColor(mColorSeekBar.getColor());
                 Log.i(TAG, "===colorPosition:" + colorBarPosition
                         + "-alphaPosition:" + alphaBarPosition
+                        + "-ColorIndexPosition:" + mColorSeekBar.getColorIndexPosition(color)
                         + "-color:" + color + "===");
             }
         });
@@ -108,8 +114,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStop() {
+        super.onStop();
         spe.putInt("color", mColorSeekBar.getColor());
         spe.putBoolean("showAlpha", mColorSeekBar.isShowAlphaBar());
         spe.commit();
