@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
 //        mColorSeekBar.setBarHeight(5);
 //        mColorSeekBar.setColor(0xffffff);
 //        mColorSeekBar.setColorBarPosition(30);
+//        mColorSeekBar.setAlphaMaxPosition(250);
+//        mColorSeekBar.setAlphaMinPosition(70);
         mColorSeekBar.setMaxPosition(100);
         mColorSeekBar.setShowAlphaBar(true);
         mColorSeekBar.setThumbHeight(30);
@@ -49,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.i(TAG,"done!");
             }
         });
-
         mColorSeekBar.setOnColorChangeListener(new ColorSeekBar.OnColorChangeListener() {
             @Override
             public void onColorChangeListener(int colorBarPosition, int alphaBarPosition, int color) {
