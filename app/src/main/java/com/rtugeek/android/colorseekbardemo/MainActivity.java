@@ -1,9 +1,13 @@
 package com.rtugeek.android.colorseekbardemo;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Handler;
+import android.support.v4.graphics.ColorUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
@@ -11,6 +15,7 @@ import android.widget.TextView;
 
 import com.rtugeek.android.colorseekbar.ColorSeekBar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private SharedPreferences.Editor spe;
     private static final String TAG = "ColorSeekBar";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
         final CheckBox showAlphaCheckBox = (CheckBox) findViewById(R.id.checkBox);
         final SeekBar barHeightSeekBar = (SeekBar) findViewById(R.id.seekBar);
         final SeekBar thumbHeightSeekBar = (SeekBar) findViewById(R.id.seekBar2);
-
 //        mColorSeekBar.setAlphaBarPosition(10);
 //        mColorSeekBar.setBarMargin(10);
 //        mColorSeekBar.setBarHeight(5);
@@ -43,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
         mColorSeekBar.setMaxPosition(100);
         mColorSeekBar.setShowAlphaBar(true);
         mColorSeekBar.setThumbHeight(30);
-        mColorSeekBar.setColorSeeds(R.array.material_colors);
 
         mColorSeekBar.setOnInitDoneListener(new ColorSeekBar.OnInitDoneListener() {
             @Override

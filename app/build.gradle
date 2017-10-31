@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 android {
     compileSdkVersion 25
-    buildToolsVersion '25.0.1'
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         applicationId "com.rtugeek.android.colorseekbardemo"
         minSdkVersion 9
         targetSdkVersion 23
-        versionCode 2
-        versionName "1.2.2"
+        versionCode 3
+        versionName "1.5.1"
     }
     buildTypes {
         release {

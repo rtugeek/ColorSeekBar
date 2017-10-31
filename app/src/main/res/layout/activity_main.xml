@@ -24,11 +24,10 @@
 
     <com.rtugeek.android.colorseekbar.ColorSeekBar
         android:id="@+id/colorSlider"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView"
         android:layout_margin="6dp"
-        app:isVertical="false"
         app:colorSeeds="@array/material_colors" />
 
     <CheckBox

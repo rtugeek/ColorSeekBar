@@ -519,9 +519,8 @@ public class ColorSeekBar extends View {
 
     public void setColorSeeds(int[] colors) {
         mColorSeeds = colors;
+        init();
         invalidate();
-        cacheColors();
-        setAlphaValue();
         if (mOnColorChangeLister != null)
             mOnColorChangeLister.onColorChangeListener(mColorBarPosition, mAlphaBarPosition, getColor());
     }
