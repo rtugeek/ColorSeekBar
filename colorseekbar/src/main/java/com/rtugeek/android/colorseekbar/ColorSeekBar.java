@@ -114,7 +114,7 @@ public class ColorSeekBar extends View {
             }
 
         }else{
-            if (widthSpeMode == MeasureSpec.AT_MOST || widthSpeMode == MeasureSpec.UNSPECIFIED) {
+            if (heightSpeMode == MeasureSpec.AT_MOST || heightSpeMode == MeasureSpec.UNSPECIFIED) {
                 mViewHeight = thumbHeight + barHeight + mBarMargin;
                 setMeasuredDimension(mViewWidth, mViewHeight);
             }
@@ -703,4 +703,7 @@ public class ColorSeekBar extends View {
         void done();
     }
 
+    public int getColorBarPosition() {
+        return mColorBarPosition;
+    }
 }
