@@ -31,11 +31,13 @@ public class MainActivity extends AppCompatActivity {
         sp = getPreferences(MODE_PRIVATE);
         spe = sp.edit();
 
-        mColorSeekBar = (ColorSeekBar) findViewById(R.id.colorSlider);
-        final TextView textView = (TextView) findViewById(R.id.textView);
-        final CheckBox showAlphaCheckBox = (CheckBox) findViewById(R.id.checkBox);
-        final SeekBar barHeightSeekBar = (SeekBar) findViewById(R.id.seekBar);
-        final SeekBar thumbHeightSeekBar = (SeekBar) findViewById(R.id.seekBar2);
+        mColorSeekBar = findViewById(R.id.colorSlider);
+
+        mColorSeekBar.setColorSeeds(R.array.text_colors);
+        final TextView textView = findViewById(R.id.textView);
+        final CheckBox showAlphaCheckBox = findViewById(R.id.checkBox);
+        final SeekBar barHeightSeekBar = findViewById(R.id.seekBar);
+        final SeekBar thumbHeightSeekBar = findViewById(R.id.seekBar2);
 //        mColorSeekBar.setAlphaBarPosition(10);
 //        mColorSeekBar.setBarMargin(10);
 //        mColorSeekBar.setBarHeight(5);
@@ -95,8 +97,11 @@ public class MainActivity extends AppCompatActivity {
         thumbHeightSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if(progress < 1){
+                    progress = 1;
+                }
                 mColorSeekBar.setThumbHeight((float) progress);
-                ((TextView) findViewById(R.id.textView3)).setText("thumbHeight:" + progress + "dp");
+                ((TextView) findViewById(R.id.textView3)).setText(String.format("thumbHeight:%ddp",progress));
             }
 
             @Override

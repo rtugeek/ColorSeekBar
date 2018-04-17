@@ -1,14 +1,13 @@
 apply plugin: 'com.android.application'
 android {
-    compileSdkVersion 25
-    buildToolsVersion '26.0.2'
-
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "com.rtugeek.android.colorseekbardemo"
-        minSdkVersion 9
-        targetSdkVersion 23
-        versionCode 3
-        versionName "1.5.1"
+        minSdkVersion 17
+        targetSdkVersion 27
+        versionCode 4
+        versionName "1.5.2"
     }
     buildTypes {
         release {
@@ -16,10 +15,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+    }
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile project(':colorseekbar')
-    compile 'com.android.support:appcompat-v7:25.0.1'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation project(':colorseekbar')
+    implementation 'com.android.support:appcompat-v7:27.1.1'
 }
