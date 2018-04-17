@@ -21,7 +21,9 @@
 
 
 ### Gradle:
-[![Release](https://jitpack.io/v/rtugeek/colorseekbar.svg)](https://jitpack.io/#rtugeek/colorseekbar) [![API](https://img.shields.io/badge/API-9%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=9) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ColorSeekBar-green.svg?style=true)](https://android-arsenal.com/details/1/3118)
+<a href="https://jitpack.io/#rtugeek/colorseekbar">![Release](https://jitpack.io/v/rtugeek/colorseekbar.svg)</a>
+<a href="https://android-arsenal.com/api?level=14">![API](https://img.shields.io/badge/API-14%2B-brightgreen.svg?style=flat)</a>
+<a href="https://android-arsenal.com/details/1/3118">![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ColorSeekBar-green.svg?style=true)</a>
 
 Step 1. Add the JitPack repository in your root build.gradle at the end of repositories:
 ```
