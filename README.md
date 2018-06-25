@@ -1,4 +1,4 @@
-# ColorSeekBar
+![ColorSeekbar](https://github.com/Tobaloidee/ColorSeekBar/blob/master/logo/colorseekbar-02.png)
 
 ### ScreenShot:
 
