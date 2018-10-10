@@ -308,6 +308,13 @@ public class ColorSeekBar extends View {
             case MotionEvent.ACTION_DOWN:
                 if (isOnBar(mColorRect, x, y)) {
                     mMovingColorBar = true;
+                    float value = (x - realLeft) / mBarWidth * mMaxPosition;
+                    mColorBarPosition = (int) value;
+                    if (mColorBarPosition < 0)
+                        mColorBarPosition = 0;
+                    if (mColorBarPosition > mMaxPosition)
+                        mColorBarPosition = mMaxPosition;
+                    invalidate();
                 } else if (mIsShowAlphaBar) {
                     if (isOnBar(mAlphaRect, x, y)) {
                         mMovingAlphaBar = true;
