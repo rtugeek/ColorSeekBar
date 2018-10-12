@@ -2,12 +2,12 @@ apply plugin: 'com.android.library'
 group='com.github.rtugeek'
 android {
     compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    buildToolsVersion '28.0.2'
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 6
-        versionName "1.7.1"
+        versionCode 7
+        versionName "1.7.2"
     }
     buildTypes {
         release {

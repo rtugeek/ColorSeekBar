@@ -1,22 +1,15 @@
 package com.rtugeek.android.colorseekbardemo;
 
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.Handler;
-import android.support.v4.graphics.ColorUtils;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.rtugeek.android.colorseekbar.ColorSeekBar;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private ColorSeekBar mColorSeekBar;
