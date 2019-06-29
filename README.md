@@ -36,7 +36,7 @@ Step 1. Add the JitPack repository in your root build.gradle at the end of repos
 ```
 Step 2. Add the dependency
 ```
-  compile 'com.github.rtugeek:colorseekbar:1.7.2'
+  compile 'com.github.rtugeek:colorseekbar:1.7.4'
 ```
 
 ##  Usage

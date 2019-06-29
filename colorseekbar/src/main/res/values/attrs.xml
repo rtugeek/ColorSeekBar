@@ -11,5 +11,7 @@
         <attr name="barMargin" format="dimension"/>
         <attr name="maxPosition" format="integer"/>
         <attr name="isVertical" format="boolean"/>
+        <attr name="disabledColor" format="color"/>
+        <attr name="showThumb" format="boolean"/>
     </declare-styleable>
 </resources>

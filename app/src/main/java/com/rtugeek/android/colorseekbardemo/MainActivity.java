@@ -1,6 +1,7 @@
 package com.rtugeek.android.colorseekbardemo;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         mColorSeekBar.setMaxPosition(100);
         mColorSeekBar.setShowAlphaBar(true);
         mColorSeekBar.setThumbHeight(30);
+        mColorSeekBar.setDisabledColor(Color.GRAY);
 
         mColorSeekBar.setOnInitDoneListener(new ColorSeekBar.OnInitDoneListener() {
             @Override
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.i(TAG,"done!");
             }
         });
+
         mColorSeekBar.setOnColorChangeListener(new ColorSeekBar.OnColorChangeListener() {
             @Override
             public void onColorChangeListener(int colorBarPosition, int alphaBarPosition, int color) {
@@ -111,6 +114,20 @@ public class MainActivity extends AppCompatActivity {
         mColorSeekBar.setColor(sp.getInt("color", 0));
         showAlphaCheckBox.setChecked(sp.getBoolean("showAlpha", false));
 
+
+        ((CheckBox)findViewById(R.id.chk_enable)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mColorSeekBar.setEnabled(isChecked);
+            }
+        });
+
+        ((CheckBox)findViewById(R.id.chk_show_thumb)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mColorSeekBar.setShowThumb(isChecked);
+            }
+        });
     }
 
 

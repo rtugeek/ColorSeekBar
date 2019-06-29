@@ -22,7 +22,8 @@ import java.util.List;
 
 
 public class ColorSeekBar extends View {
-    private int[] mColorSeeds = new int[]{0xFF000000, 0xFF9900FF, 0xFF0000FF, 0xFF00FF00, 0xFF00FFFF, 0xFFFF0000, 0xFFFF00FF, 0xFFFF6600, 0xFFFFFF00, 0xFFFFFFFF, 0xFF000000};
+    private int[] mColorSeeds = new int[]{0xFF000000, 0xFF9900FF, 0xFF0000FF, 0xFF00FF00, 0xFF00FFFF,
+            0xFFFF0000, 0xFFFF00FF, 0xFFFF6600, 0xFFFFFF00, 0xFFFFFFFF, 0xFF000000};
     private int mAlpha;
     private OnColorChangeListener mOnColorChangeLister;
     private Context mContext;
@@ -43,6 +44,7 @@ public class ColorSeekBar extends View {
     private Rect mAlphaRect;
     private int mColorBarPosition;
     private int mAlphaBarPosition;
+    private int mDisabledColor;
     private int mBarMargin = 5;
     private int mAlphaMinPosition = 0;
     private int mAlphaMaxPosition = 255;
@@ -50,11 +52,13 @@ public class ColorSeekBar extends View {
     private int mColorsToInvoke = -1;
     private boolean mInit = false;
     private boolean mFirstDraw = true;
+    private boolean mShowThumb = true;
     private OnInitDoneListener mOnInitDoneListener;
 
     private Paint colorPaint = new Paint();
     private Paint alphaThumbGradientPaint = new Paint();
     private Paint alphaBarPaint = new Paint();
+    private Paint mDisabledPaint = new Paint();
     private Paint thumbGradientPaint = new Paint();
 
     public ColorSeekBar(Context context) {
@@ -127,13 +131,18 @@ public class ColorSeekBar extends View {
         mMaxPosition = a.getInteger(R.styleable.ColorSeekBar_maxPosition, 100);
         mColorBarPosition = a.getInteger(R.styleable.ColorSeekBar_colorBarPosition, 0);
         mAlphaBarPosition = a.getInteger(R.styleable.ColorSeekBar_alphaBarPosition, mAlphaMinPosition);
+        mDisabledColor = a.getInteger(R.styleable.ColorSeekBar_disabledColor, Color.GRAY);
         mIsVertical = a.getBoolean(R.styleable.ColorSeekBar_isVertical, false);
         mIsShowAlphaBar = a.getBoolean(R.styleable.ColorSeekBar_showAlphaBar, false);
+        mShowThumb = a.getBoolean(R.styleable.ColorSeekBar_showAlphaBar, true);
         int backgroundColor = a.getColor(R.styleable.ColorSeekBar_bgColor, Color.TRANSPARENT);
         mBarHeight = (int) a.getDimension(R.styleable.ColorSeekBar_barHeight, (float) dp2px(2));
         mThumbHeight = (int) a.getDimension(R.styleable.ColorSeekBar_thumbHeight, (float) dp2px(30));
         mBarMargin = (int) a.getDimension(R.styleable.ColorSeekBar_barMargin, (float) dp2px(5));
         a.recycle();
+
+        mDisabledPaint.setAntiAlias(true);
+        mDisabledPaint.setColor(mDisabledColor);
 
         if (colorsId != 0) {
             mColorSeeds = getColorsById(colorsId);
@@ -143,7 +152,7 @@ public class ColorSeekBar extends View {
     }
 
     /**
-     * @param   id color array resource
+     * @param id color array resource
      * @return
      */
     private int[] getColorsById(@ArrayRes int id) {
@@ -233,7 +242,7 @@ public class ColorSeekBar extends View {
         float colorPosition = (float) mColorBarPosition / mMaxPosition * mBarWidth;
 
         colorPaint.setAntiAlias(true);
-        int color = getColor(false);
+        int color = isEnabled() ? getColor(false) : mDisabledColor;
         int colorStartTransparent = Color.argb(mAlphaMaxPosition, Color.red(color), Color.green(color), Color.blue(color));
         int colorEndTransparent = Color.argb(mAlphaMinPosition, Color.red(color), Color.green(color), Color.blue(color));
         colorPaint.setColor(color);
@@ -242,17 +251,20 @@ public class ColorSeekBar extends View {
         canvas.drawBitmap(mTransparentBitmap, 0, 0, null);
 
         //draw color bar
-        canvas.drawRect(mColorRect, mColorRectPaint);
+        canvas.drawRect(mColorRect, isEnabled() ? mColorRectPaint : mDisabledPaint);
         //draw color bar thumb
-        float thumbX = colorPosition + realLeft;
-        float thumbY = mColorRect.top + mColorRect.height() / 2;
-        canvas.drawCircle(thumbX, thumbY, mBarHeight / 2 + 5, colorPaint);
+        if(mShowThumb){
+            float thumbX = colorPosition + realLeft;
+            float thumbY = mColorRect.top + mColorRect.height() / 2;
+            canvas.drawCircle(thumbX, thumbY, mBarHeight / 2 + 5, colorPaint);
 
-        //draw color bar thumb radial gradient shader
-        RadialGradient thumbShader = new RadialGradient(thumbX, thumbY, mThumbRadius, toAlpha, null, Shader.TileMode.MIRROR);
-        thumbGradientPaint.setAntiAlias(true);
-        thumbGradientPaint.setShader(thumbShader);
-        canvas.drawCircle(thumbX, thumbY, mThumbHeight / 2, thumbGradientPaint);
+            //draw color bar thumb radial gradient shader
+            RadialGradient thumbShader = new RadialGradient(thumbX, thumbY, mThumbRadius, toAlpha, null, Shader.TileMode.MIRROR);
+            thumbGradientPaint.setAntiAlias(true);
+            thumbGradientPaint.setShader(thumbShader);
+            canvas.drawCircle(thumbX, thumbY, mThumbHeight / 2, thumbGradientPaint);
+        }
+
 
         if (mIsShowAlphaBar) {
             //init rect
@@ -265,17 +277,19 @@ public class ColorSeekBar extends View {
             canvas.drawRect(mAlphaRect, alphaBarPaint);
 
             //draw alpha bar thumb
-            float alphaPosition = (float) (mAlphaBarPosition - mAlphaMinPosition) / (mAlphaMaxPosition - mAlphaMinPosition) * mBarWidth;
-            float alphaThumbX = alphaPosition + realLeft;
-            float alphaThumbY = mAlphaRect.top + mAlphaRect.height() / 2;
-            canvas.drawCircle(alphaThumbX, alphaThumbY, mBarHeight / 2 + 5, colorPaint);
+            if(mShowThumb){
+                float alphaPosition = (float) (mAlphaBarPosition - mAlphaMinPosition) / (mAlphaMaxPosition - mAlphaMinPosition) * mBarWidth;
+                float alphaThumbX = alphaPosition + realLeft;
+                float alphaThumbY = mAlphaRect.top + mAlphaRect.height() / 2;
+                canvas.drawCircle(alphaThumbX, alphaThumbY, mBarHeight / 2 + 5, colorPaint);
 
-            //draw alpha bar thumb radial gradient shader
-            RadialGradient alphaThumbShader = new RadialGradient(alphaThumbX, alphaThumbY, mThumbRadius, toAlpha, null, Shader.TileMode.MIRROR);
+                //draw alpha bar thumb radial gradient shader
+                RadialGradient alphaThumbShader = new RadialGradient(alphaThumbX, alphaThumbY, mThumbRadius, toAlpha, null, Shader.TileMode.MIRROR);
 
-            alphaThumbGradientPaint.setAntiAlias(true);
-            alphaThumbGradientPaint.setShader(alphaThumbShader);
-            canvas.drawCircle(alphaThumbX, alphaThumbY, mThumbHeight / 2, alphaThumbGradientPaint);
+                alphaThumbGradientPaint.setAntiAlias(true);
+                alphaThumbGradientPaint.setShader(alphaThumbShader);
+                canvas.drawCircle(alphaThumbX, alphaThumbY, mThumbHeight / 2, alphaThumbGradientPaint);
+            }
         }
 
         if (mFirstDraw) {
@@ -294,6 +308,9 @@ public class ColorSeekBar extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (!isEnabled()) {
+            return true;
+        }
         float x = mIsVertical ? event.getY() : event.getX();
         float y = mIsVertical ? event.getX() : event.getY();
         switch (event.getAction()) {
@@ -337,6 +354,11 @@ public class ColorSeekBar extends View {
             default:
         }
         return true;
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
     }
 
     /***
@@ -648,6 +670,7 @@ public class ColorSeekBar extends View {
 
     /**
      * Set color,the mCachedColors must contains the specified color, if not ,invoke setColorBarPosition(0);
+     *
      * @param color
      */
     public void setColor(int color) {
@@ -708,5 +731,23 @@ public class ColorSeekBar extends View {
 
     public int getColorBarPosition() {
         return mColorBarPosition;
+    }
+
+    public int getDisabledColor() {
+        return mDisabledColor;
+    }
+
+    public void setDisabledColor(int disabledColor) {
+        this.mDisabledColor = disabledColor;
+        mDisabledPaint.setColor(disabledColor);
+    }
+
+    public boolean isShowThumb() {
+        return mShowThumb;
+    }
+
+    public void setShowThumb(boolean showThumb) {
+        this.mShowThumb = showThumb;
+        invalidate();
     }
 }
