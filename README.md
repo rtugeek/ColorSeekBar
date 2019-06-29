@@ -17,6 +17,8 @@
 |thumbHeight|dimension|30dp|
 |showAlphaBar|boolean|false|
 |isVertical|boolean|false|
+|disabledColor|color|Color.GRAY|
+|showThumb|boolean|true|
 
 
 
@@ -36,7 +38,7 @@ Step 1. Add the JitPack repository in your root build.gradle at the end of repos
 ```
 Step 2. Add the dependency
 ```
-  compile 'com.github.rtugeek:colorseekbar:1.7.4'
+  implementation 'com.github.rtugeek:colorseekbar:1.7.4'
 ```
 
 ##  Usage
