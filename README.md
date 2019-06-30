@@ -19,6 +19,7 @@
 |isVertical|boolean|false|
 |disabledColor|color|Color.GRAY|
 |showThumb|boolean|true|
+|barRadius|dimension|0px|
 
 
 
@@ -29,61 +30,60 @@
 
 Step 1. Add the JitPack repository in your root build.gradle at the end of repositories:
 ```
-  allprojects {
-		repositories {
-			...
-			maven { url "https://jitpack.io" }
-		}
-	}
+allprojects {
+    repositories {
+        ...
+        maven { url "https://jitpack.io" }
+    }
+}
 ```
 Step 2. Add the dependency
 ```
-  implementation 'com.github.rtugeek:colorseekbar:1.7.4'
+implementation 'com.github.rtugeek:colorseekbar:1.7.5'
 ```
 
 ##  Usage
 
 XML
 ```xml
-  <com.rtugeek.android.colorseekbar.ColorSeekBar
-      android:id="@+id/colorSlider"
-      android:layout_width="match_parent"
-      app:colorSeeds="@array/material_colors"
-      android:layout_height="wrap_content" />
+<com.rtugeek.android.colorseekbar.ColorSeekBar
+  android:id="@+id/colorSlider"
+  android:layout_width="match_parent"
+  app:colorSeeds="@array/material_colors"
+  android:layout_height="wrap_content" />
 ```
 
 JAVA
 ```java
-  colorSeekBar.setMaxPosition(100);
-  colorSeekBar.setColorSeeds(R.array.material_colors); // material_colors is defalut included in res/color,just use it.
-  colorSeekBar.setColorBarPosition(10); //0 - maxValue
-  colorSeekBar.setAlphaBarPosition(10); //0 - 255
-  colorSeekBar.setShowAlphaBar(true);
-  colorSeekBar.setBarHeight(5); //5dpi
-  colorSeekBar.setThumbHeight(30); //30dpi
-  colorSeekBar.setBarMargin(10); //set the margin between colorBar and alphaBar 10dpi
+colorSeekBar.setMaxPosition(100);
+colorSeekBar.setColorSeeds(R.array.material_colors); // material_colors is defalut included in res/color,just use it.
+colorSeekBar.setColorBarPosition(10); //0 - maxValue
+colorSeekBar.setAlphaBarPosition(10); //0 - 255
+colorSeekBar.setShowAlphaBar(true);
+colorSeekBar.setBarHeight(5); //5dpi
+colorSeekBar.setThumbHeight(30); //30dpi
+colorSeekBar.setBarMargin(10); //set the margin between colorBar and alphaBar 10dpi
 ```
 
 Listener
 ```java
-
-  colorSeekBar.setOnColorChangeListener(new ColorSeekBar.OnColorChangeListener() {
-            @Override
-            public void onColorChangeListener(int colorBarPosition, int alphaBarPosition, int color) {
-                textView.setTextColor(color);
-                //colorSeekBar.getAlphaValue();
-            }
-  });
+colorSeekBar.setOnColorChangeListener(new ColorSeekBar.OnColorChangeListener() {
+        @Override
+        public void onColorChangeListener(int colorBarPosition, int alphaBarPosition, int color) {
+            textView.setTextColor(color);
+            //colorSeekBar.getAlphaValue();
+        }
+});
 ```
 
-## Vertical Bar [BETA]
+## Vertical Bar
 ```xml
-  <com.rtugeek.android.colorseekbar.ColorSeekBar
-      android:id="@+id/colorSlider"
-      android:layout_width="match_parent"
-      app:colorSeeds="@array/material_colors"
-      app:isVertical="true"
-      android:layout_height="wrap_content" />
+<com.rtugeek.android.colorseekbar.ColorSeekBar
+  android:id="@+id/colorSlider"
+  android:layout_width="match_parent"
+  app:colorSeeds="@array/material_colors"
+  app:isVertical="true"
+  android:layout_height="wrap_content" />
 ```
  ![](https://github.com/rtugeek/ColorSeekBar/blob/master/screenshot/vertical.png)
 

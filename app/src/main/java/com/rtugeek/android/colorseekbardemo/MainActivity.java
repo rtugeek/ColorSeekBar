@@ -128,6 +128,24 @@ public class MainActivity extends AppCompatActivity {
                 mColorSeekBar.setShowThumb(isChecked);
             }
         });
+
+        ((SeekBar)findViewById(R.id.seek_radius)).setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                mColorSeekBar.setBarRadius(progress);
+                ((TextView) findViewById(R.id.tv_radius)).setText(String.format("Bar Radius:%dpx",progress));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
 
 

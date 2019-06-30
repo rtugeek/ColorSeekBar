@@ -10,6 +10,7 @@ import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.RadialGradient;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.Shader;
 import android.os.Build;
 import android.support.annotation.ArrayRes;
@@ -32,7 +33,7 @@ public class ColorSeekBar extends View {
     private boolean mMovingColorBar;
     private boolean mMovingAlphaBar;
     private Bitmap mTransparentBitmap;
-    private Rect mColorRect;
+    private RectF mColorRect;
     private int mThumbHeight = 20;
     private float mThumbRadius;
     private int mBarHeight = 2;
@@ -41,13 +42,14 @@ public class ColorSeekBar extends View {
     private int realRight;
     private int mBarWidth;
     private int mMaxPosition;
-    private Rect mAlphaRect;
+    private RectF mAlphaRect;
     private int mColorBarPosition;
     private int mAlphaBarPosition;
     private int mDisabledColor;
     private int mBarMargin = 5;
     private int mAlphaMinPosition = 0;
     private int mAlphaMaxPosition = 255;
+    private int mBarRadius;
     private List<Integer> mCachedColors = new ArrayList<>();
     private int mColorsToInvoke = -1;
     private boolean mInit = false;
@@ -137,6 +139,7 @@ public class ColorSeekBar extends View {
         mShowThumb = a.getBoolean(R.styleable.ColorSeekBar_showAlphaBar, true);
         int backgroundColor = a.getColor(R.styleable.ColorSeekBar_bgColor, Color.TRANSPARENT);
         mBarHeight = (int) a.getDimension(R.styleable.ColorSeekBar_barHeight, (float) dp2px(2));
+        mBarRadius = (int) a.getDimension(R.styleable.ColorSeekBar_barRadius, 0);
         mThumbHeight = (int) a.getDimension(R.styleable.ColorSeekBar_thumbHeight, (float) dp2px(30));
         mBarMargin = (int) a.getDimension(R.styleable.ColorSeekBar_barMargin, (float) dp2px(5));
         a.recycle();
@@ -189,7 +192,7 @@ public class ColorSeekBar extends View {
         mBarWidth = realRight - realLeft;
 
         //init rect
-        mColorRect = new Rect(realLeft, realTop, realRight, realTop + mBarHeight);
+        mColorRect = new RectF(realLeft, realTop, realRight, realTop + mBarHeight);
 
         //init paint
         LinearGradient mColorGradient = new LinearGradient(0, 0, mColorRect.width(), 0, mColorSeeds, null, Shader.TileMode.CLAMP);
@@ -251,7 +254,7 @@ public class ColorSeekBar extends View {
         canvas.drawBitmap(mTransparentBitmap, 0, 0, null);
 
         //draw color bar
-        canvas.drawRect(mColorRect, isEnabled() ? mColorRectPaint : mDisabledPaint);
+        canvas.drawRoundRect(mColorRect,mBarRadius,mBarRadius, isEnabled() ? mColorRectPaint : mDisabledPaint);
         //draw color bar thumb
         if(mShowThumb){
             float thumbX = colorPosition + realLeft;
@@ -269,7 +272,7 @@ public class ColorSeekBar extends View {
         if (mIsShowAlphaBar) {
             //init rect
             int top = (int) (mThumbHeight + mThumbRadius + mBarHeight + mBarMargin);
-            mAlphaRect = new Rect(realLeft, top, realRight, top + mBarHeight);
+            mAlphaRect = new RectF(realLeft, top, realRight, top + mBarHeight);
             //draw alpha bar
             alphaBarPaint.setAntiAlias(true);
             LinearGradient alphaBarShader = new LinearGradient(0, 0, mAlphaRect.width(), 0, toAlpha, null, Shader.TileMode.CLAMP);
@@ -411,7 +414,7 @@ public class ColorSeekBar extends View {
      * @param y
      * @return whether MotionEvent is performing on bar or not
      */
-    private boolean isOnBar(Rect r, float x, float y) {
+    private boolean isOnBar(RectF r, float x, float y) {
         if (r.left - mThumbRadius < x && x < r.right + mThumbRadius && r.top - mThumbRadius < y && y < r.bottom + mThumbRadius) {
             return true;
         } else {
@@ -750,4 +753,18 @@ public class ColorSeekBar extends View {
         this.mShowThumb = showThumb;
         invalidate();
     }
+
+    public int getBarRadius() {
+        return mBarRadius;
+    }
+
+    /**
+     * Set bar radius with px unit
+     * @param barRadiusInPx
+     */
+    public void setBarRadius(int barRadiusInPx) {
+        this.mBarRadius = barRadiusInPx;
+        invalidate();
+    }
+
 }
