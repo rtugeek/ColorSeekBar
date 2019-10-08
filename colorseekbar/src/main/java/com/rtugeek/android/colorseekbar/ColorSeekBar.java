@@ -42,7 +42,7 @@ public class ColorSeekBar extends View {
     private int realRight;
     private int mBarWidth;
     private int mMaxPosition;
-    private RectF mAlphaRect;
+    private RectF mAlphaRect = new RectF();
     private int mColorBarPosition;
     private int mAlphaBarPosition;
     private int mDisabledColor;

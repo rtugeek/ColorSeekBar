@@ -101,14 +101,14 @@ Render flow:
 getColor()/getColors()/getColorIndexPosition() do not work correct until onDraw() method invoked.
 So, If you want to get color or something else form ColorSeekBar on Activity.onCreate() function, just do:
 ```java
-    mColorSeekBar.setOnInitDoneListener(new ColorSeekBar.OnInitDoneListener() {
-        @Override
-        public void done() {
-            mColorSeekBar.getColorIndexPosition(mColor);
-            //mColorSeekBar.getColors();
-            //mColorSeekBar.getColor();
-        }
-    });
+mColorSeekBar.setOnInitDoneListener(new ColorSeekBar.OnInitDoneListener() {
+    @Override` `
+    public void done() {
+        mColorSeekBar.getColorIndexPosition(mColor);
+        //mColorSeekBar.getColors();
+        //mColorSeekBar.getColor();
+    }
+});
 ```
 
 **Spread the word**
