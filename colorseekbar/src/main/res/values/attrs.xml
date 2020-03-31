@@ -5,6 +5,7 @@
         <attr name="barHeight" format="dimension" />
         <attr name="thumbHeight" format="dimension" />
         <attr name="showAlphaBar" format="boolean" />
+        <attr name="showColorBar" format="boolean" />
         <attr name="alphaBarPosition" format="integer" />
         <attr name="colorBarPosition" format="integer" />
         <attr name="bgColor" format="color"/>

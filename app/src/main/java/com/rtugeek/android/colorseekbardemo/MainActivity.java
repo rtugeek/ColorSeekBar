@@ -3,7 +3,7 @@ package com.rtugeek.android.colorseekbardemo;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -43,6 +43,10 @@ public class MainActivity extends AppCompatActivity {
         mColorSeekBar.setShowAlphaBar(true);
         mColorSeekBar.setThumbHeight(30);
         mColorSeekBar.setDisabledColor(Color.GRAY);
+
+        int colorBarPosition = sp.getInt("colorBarPosition",0);
+        int alphaBarPosition = sp.getInt("alphaBarPosition",0);
+        mColorSeekBar.setPosition(colorBarPosition,alphaBarPosition);
 
         mColorSeekBar.setOnInitDoneListener(new ColorSeekBar.OnInitDoneListener() {
             @Override
@@ -129,6 +133,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ((CheckBox)findViewById(R.id.chk_show_color_bar)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mColorSeekBar.setShowColorBar(isChecked);
+            }
+        });
+
         ((SeekBar)findViewById(R.id.seek_radius)).setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -146,12 +157,16 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
     }
 
 
     @Override
     protected void onStop() {
         super.onStop();
+        spe.putInt("color", mColorSeekBar.getColor());
+        spe.putInt("colorBarPosition", mColorSeekBar.getColorBarPosition());
+        spe.putInt("alphaBarPosition", mColorSeekBar.getAlphaBarPosition());
         spe.putInt("color", mColorSeekBar.getColor());
         spe.putBoolean("showAlpha", mColorSeekBar.isShowAlphaBar());
         spe.commit();

@@ -16,6 +16,7 @@
 |barMargin|dimension|5dp|
 |thumbHeight|dimension|30dp|
 |showAlphaBar|boolean|false|
+|showColorBar|boolean|true|
 |isVertical|boolean|false|
 |disabledColor|color|Color.GRAY|
 |showThumb|boolean|true|
@@ -39,7 +40,7 @@ allprojects {
 ```
 Step 2. Add the dependency
 ```
-implementation 'com.github.rtugeek:colorseekbar:1.7.5'
+implementation 'com.github.rtugeek:colorseekbar:1.7.6'
 ```
 
 ##  Usage
@@ -59,6 +60,8 @@ colorSeekBar.setMaxPosition(100);
 colorSeekBar.setColorSeeds(R.array.material_colors); // material_colors is defalut included in res/color,just use it.
 colorSeekBar.setColorBarPosition(10); //0 - maxValue
 colorSeekBar.setAlphaBarPosition(10); //0 - 255
+colorSeekBar.setPosition(10,10); // An easier way to set ColorBar and AlphaBar
+
 colorSeekBar.setShowAlphaBar(true);
 colorSeekBar.setBarHeight(5); //5dpi
 colorSeekBar.setThumbHeight(30); //30dpi
