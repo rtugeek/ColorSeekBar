@@ -623,6 +623,12 @@ public class ColorSeekBar extends View {
     private void setAlphaValue() {
         mAlpha = 255 - mAlphaBarPosition;
     }
+    
+    private void setAlphaValue(int value) {
+        mAlpha = value;
+        mAlphaBarPosition = 255 - mAlpha;
+       // invalidate();
+    }
 
     public void setAlphaBarPosition(int position) {
         setPosition(mColorBarPosition,position);
@@ -695,6 +701,9 @@ public class ColorSeekBar extends View {
 
         if (mInit) {
             int value = mCachedColors.indexOf(withoutAlphaColor);
+            if (mIsShowAlphaBar) {
+                setAlphaValue(Color.alpha(color));
+            }
             setColorBarPosition(value);
         } else {
             mColorsToInvoke = color;
