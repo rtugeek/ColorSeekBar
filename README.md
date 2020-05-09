@@ -40,7 +40,7 @@ allprojects {
 ```
 Step 2. Add the dependency
 ```
-implementation 'com.github.rtugeek:colorseekbar:1.7.6'
+implementation 'com.github.rtugeek:colorseekbar:1.7.7'
 ```
 
 ##  Usage
