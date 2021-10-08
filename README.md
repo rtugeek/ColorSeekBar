@@ -2,8 +2,8 @@
 
 ### ScreenShot:
 
-![](https://github.com/rtugeek/ColorSeekBar/blob/master/screenshot/color.jpg)
-![](https://github.com/rtugeek/ColorSeekBar/blob/master/screenshot/alpha.jpg)
+<img src="https://github.com/rtugeek/ColorSeekBar/blob/master/screenshot/color.jpg" width="300" />
+<img src="https://github.com/rtugeek/ColorSeekBar/blob/master/screenshot/alpha.jpg" width="300" />
 
 ### ColorSeekbar Attrs
 
@@ -131,7 +131,7 @@ Thumb Drawer
     android:layout_height="wrap_content" />
 ```
 
-![](https://github.com/rtugeek/ColorSeekBar/blob/master/screenshot/vertical.png)
+<img src="https://github.com/rtugeek/ColorSeekBar/blob/master/screenshot/vertical.jpg" width="300" />
 
 **Spread the word**
 
