@@ -2,34 +2,52 @@
 
 ### ScreenShot:
 
- ![](https://github.com/rtugeek/ColorSeekBar/blob/master/screenshot/screenshot.gif)
+![](https://github.com/rtugeek/ColorSeekBar/blob/master/screenshot/color.jpg)
+![](https://github.com/rtugeek/ColorSeekBar/blob/master/screenshot/alpha.jpg)
 
-### Attrs
-|attr|format|default|
-|---|:---|:---:|
-|colorSeeds|references||
-|colorBarPosition|integer|0|
-|alphaBarPosition|integer|0|
-|maxPosition|integer|100|
-|bgColor|color|TRANSPARENT|
-|barHeight|dimension|2dp|
-|barMargin|dimension|5dp|
-|thumbHeight|dimension|30dp|
-|showAlphaBar|boolean|false|
-|showColorBar|boolean|true|
-|isVertical|boolean|false|
-|disabledColor|color|Color.GRAY|
-|showThumb|boolean|true|
-|barRadius|dimension|0px|
+### ColorSeekbar Attrs
 
+```xml
 
+<declare-styleable name="ColorSeekBar">
+    <attr name="colorSeekBarColorSeeds" format="reference" />
+    <attr name="colorSeekBarBarHeight" format="dimension" />
+    <attr name="colorSeekBarProgress" format="integer" />
+    <attr name="colorSeekBarRadius" format="dimension" />
+    <attr name="colorSeekBarMaxProgress" format="integer" />
+    <attr name="colorSeekBarVertical" format="boolean" />
+    <attr name="colorSeekBarShowThumb" format="boolean" />
+    <attr name="colorSeekBarBorderColor" format="color" />
+    <attr name="colorSeekBarBorderSize" format="dimension" />
+</declare-styleable>
+```
+
+### AlphaSeekbar Attrs
+
+```xml
+
+<declare-styleable name="AlphaSeekBar">
+    <attr name="alphaSeekBarHeight" format="dimension" />
+    <attr name="alphaSeekBarRadius" format="dimension" />
+    <attr name="alphaSeekBarShowGrid" format="boolean" />
+    <attr name="alphaSeekBarShowThumb" format="boolean" />
+    <attr name="alphaSeekBarSizeGrid" format="dimension" />
+    <attr name="alphaSeekBarProgress" format="integer" />
+    <attr name="alphaSeekBarVertical" format="boolean" />
+    <attr name="alphaSeekBarMaxProgress" format="integer" />
+    <attr name="alphaSeekBarBorderColor" format="color" />
+    <attr name="alphaSeekBarBorderSize" format="dimension" />
+</declare-styleable>
+```
 
 ### Gradle:
+
 <a href="https://jitpack.io/#rtugeek/colorseekbar">![Release](https://jitpack.io/v/rtugeek/colorseekbar.svg)</a>
 <a href="https://android-arsenal.com/api?level=14">![API](https://img.shields.io/badge/API-14%2B-brightgreen.svg?style=flat)</a>
 <a href="https://android-arsenal.com/details/1/3118">![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ColorSeekBar-green.svg?style=true)</a>
 
 Step 1. Add the JitPack repository in your root build.gradle at the end of repositories:
+
 ```
 allprojects {
     repositories {
@@ -38,81 +56,82 @@ allprojects {
     }
 }
 ```
+
 Step 2. Add the dependency
+
 ```
-implementation 'com.github.rtugeek:colorseekbar:1.7.7'
+implementation 'com.github.rtugeek:colorseekbar:2.0.0'
 ```
 
-##  Usage
+## Usage
 
 XML
+
 ```xml
-<com.rtugeek.android.colorseekbar.ColorSeekBar
-  android:id="@+id/colorSlider"
-  android:layout_width="match_parent"
-  app:colorSeeds="@array/material_colors"
-  android:layout_height="wrap_content" />
+<com.rtugeek.android.colorseekbar.ColorSeekBar 
+    android:id="@+id/colorSeekBar"
+    android:layout_width="match_parent"
+    app:colorSeeds="@array/material_colors"
+    android:layout_height="wrap_content" />
+
+<com.rtugeek.android.colorseekbar.AlphaSeekBar 
+    android:id="@+id/alphaSeekBar"
+    android:layout_width="match_parent" 
+    app:colorSeeds="@array/material_colors"
+    android:layout_height="wrap_content" />
 ```
 
-JAVA
-```java
-colorSeekBar.setMaxPosition(100);
-colorSeekBar.setColorSeeds(R.array.material_colors); // material_colors is defalut included in res/color,just use it.
-colorSeekBar.setColorBarPosition(10); //0 - maxValue
-colorSeekBar.setAlphaBarPosition(10); //0 - 255
-colorSeekBar.setPosition(10,10); // An easier way to set ColorBar and AlphaBar
+Kotlin
 
-colorSeekBar.setShowAlphaBar(true);
-colorSeekBar.setBarHeight(5); //5dpi
-colorSeekBar.setThumbHeight(30); //30dpi
-colorSeekBar.setBarMargin(10); //set the margin between colorBar and alphaBar 10dpi
+```kotlin
+colorSeekBar.maxProgress = 1000
+colorSeekBar.progress = 50
+colorSeekBar.borderColor = Color.BLACK
+colorSeekBar.borderRadius = 10
+colorSeekBar.borderSize = 10
+colorSeekBar.thumbDrawer = DefaultThumbDrawer(30,Color.WHITE,Color.BLUE)
+colorSeekBar.isVertical = false
+colorSeekBar.barHeight = 10
+
+alphaSeekBar.maxProgress = 1000
+alphaSeekBar.borderColor = Color.BLACK
+alphaSeekBar.borderRadius = 10
+alphaSeekBar.borderSize = 10
+alphaSeekBar.thumbDrawer = DefaultThumbDrawer(30,Color.WHITE,Color.BLUE)
+alphaSeekBar.isVertical = false
+alphaSeekBar.barHeight = 10
 ```
 
 Listener
+
 ```java
-colorSeekBar.setOnColorChangeListener(new ColorSeekBar.OnColorChangeListener() {
-        @Override
-        public void onColorChangeListener(int colorBarPosition, int alphaBarPosition, int color) {
-            textView.setTextColor(color);
-            //colorSeekBar.getAlphaValue();
-        }
-});
+colorSeekBar.setOnColorChangeListener { progress, color ->
+    Log.i("TAG", "===progress:$progress-color:$color===")
+}
+
+alphaSeekBar.setOnAlphaChangeListener { progress, alpha ->
+    Log.i("AlphaSeekBarFragment", "===progress:$progress-alpha:$alpha===")
+}
 ```
+
+Thumb Drawer
+- com.rtugeek.android.colorseekbar.thumb.DefaultThumbDrawer
+- com.rtugeek.android.colorseekbar.thumb.DrawableThumbDrawer - Load thumb from drawable resource
+- com.rtugeek.android.colorseekbar.thumb.ThumbDrawer - Implement this interface if you want to customize thumb
 
 ## Vertical Bar
+
 ```xml
-<com.rtugeek.android.colorseekbar.ColorSeekBar
-  android:id="@+id/colorSlider"
-  android:layout_width="match_parent"
-  app:colorSeeds="@array/material_colors"
-  app:isVertical="true"
-  android:layout_height="wrap_content" />
+
+<com.rtugeek.android.colorseekbar.ColorSeekBar 
+    android:id="@+id/colorSlider"
+    android:layout_width="match_parent" 
+    app:colorSeeds="@array/material_colors"
+    app:colorSeekBarVertical="true" 
+    android:layout_height="wrap_content" />
 ```
- ![](https://github.com/rtugeek/ColorSeekBar/blob/master/screenshot/vertical.png)
 
-
-## getColor() issue
-Render flow:  
-1.Activity->onCreate();  
-2.Activity->onResume();  
-3.ColorSeekBar->onMeasure();  
-4.ColorSeekBar->onSizeChanged();  
-5.ColorSeekBar->init();  
-6.ColorSeekBar->onMeasure();  
-7.ColorSeekBar->onDraw();  
-
-getColor()/getColors()/getColorIndexPosition() do not work correct until onDraw() method invoked.
-So, If you want to get color or something else form ColorSeekBar on Activity.onCreate() function, just do:
-```java
-mColorSeekBar.setOnInitDoneListener(new ColorSeekBar.OnInitDoneListener() {
-    @Override` `
-    public void done() {
-        mColorSeekBar.getColorIndexPosition(mColor);
-        //mColorSeekBar.getColors();
-        //mColorSeekBar.getColor();
-    }
-});
-```
+![](https://github.com/rtugeek/ColorSeekBar/blob/master/screenshot/vertical.png)
 
 **Spread the word**
 

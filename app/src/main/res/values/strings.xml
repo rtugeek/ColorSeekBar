@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ColorSeekBarDemo</string>
+    <string name="title_activity_color_seek_bar">ColorSeekBarActivity</string>
+    <string name="color">Color</string>
+    <string name="alpha">Alpha</string>
+    <string name="combine">Combine</string>
 </resources>

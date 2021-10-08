@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="ColorSeekBar">
-        <attr name="colorSeeds" format="reference" />
-        <attr name="barHeight" format="dimension" />
-        <attr name="thumbHeight" format="dimension" />
-        <attr name="showAlphaBar" format="boolean" />
-        <attr name="showColorBar" format="boolean" />
-        <attr name="alphaBarPosition" format="integer" />
-        <attr name="colorBarPosition" format="integer" />
-        <attr name="bgColor" format="color"/>
-        <attr name="barRadius" format="dimension"/>
-        <attr name="barMargin" format="dimension"/>
-        <attr name="maxPosition" format="integer"/>
-        <attr name="isVertical" format="boolean"/>
-        <attr name="disabledColor" format="color"/>
-        <attr name="showThumb" format="boolean"/>
+        <attr name="colorSeekBarColorSeeds" format="reference" />
+        <attr name="colorSeekBarBarHeight" format="dimension" />
+        <attr name="colorSeekBarProgress" format="integer" />
+        <attr name="colorSeekBarRadius" format="dimension" />
+        <attr name="colorSeekBarMaxProgress" format="integer" />
+        <attr name="colorSeekBarVertical" format="boolean" />
+        <attr name="colorSeekBarShowThumb" format="boolean" />
+        <attr name="colorSeekBarBorderColor" format="color" />
+        <attr name="colorSeekBarBorderSize" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="AlphaSeekBar">
+        <attr name="alphaSeekBarHeight" format="dimension" />
+        <attr name="alphaSeekBarRadius" format="dimension" />
+        <attr name="alphaSeekBarShowGrid" format="boolean" />
+        <attr name="alphaSeekBarShowThumb" format="boolean" />
+        <attr name="alphaSeekBarSizeGrid" format="dimension" />
+        <attr name="alphaSeekBarProgress" format="integer" />
+        <attr name="alphaSeekBarVertical" format="boolean" />
+        <attr name="alphaSeekBarMaxProgress" format="integer" />
+        <attr name="alphaSeekBarBorderColor" format="color" />
+        <attr name="alphaSeekBarBorderSize" format="dimension" />
     </declare-styleable>
 </resources>

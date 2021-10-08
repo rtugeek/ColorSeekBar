@@ -1,0 +1,225 @@
+package com.rtugeek.android.colorseekbar;
+
+import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.RectF;
+import android.graphics.Shader;
+import android.os.Build;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
+
+import com.rtugeek.android.colorseekbar.thumb.DefaultThumbDrawer;
+
+
+public class AlphaSeekBar extends BaseSeekBar {
+
+    private float mGridSize = 30;
+    private final RectF mGrid = new RectF(0, 0, mGridSize, mGridSize);
+
+    private final int GRID_WHITE = Color.WHITE;
+    private final int GRID_GREY = 0xFFEDEDED;
+
+    private OnAlphaChangeListener listener;
+    private boolean movingBar;
+
+    private boolean mShowGrid = true;
+    private final Path mClipPath = new Path();
+
+    private Paint mGridRectPaint = new Paint();
+
+    public AlphaSeekBar(Context context) {
+        super(context);
+    }
+
+    public AlphaSeekBar(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    public AlphaSeekBar(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public AlphaSeekBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+    }
+
+
+    @Override
+    protected void initPaint(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super.initPaint(context, attrs, defStyleAttr, defStyleRes);
+        //get attributes
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AlphaSeekBar, defStyleAttr, defStyleRes);
+
+        progress = a.getInteger(R.styleable.AlphaSeekBar_alphaSeekBarProgress, 0);
+        vertical = a.getBoolean(R.styleable.AlphaSeekBar_alphaSeekBarVertical, false);
+        showThumb = a.getBoolean(R.styleable.AlphaSeekBar_alphaSeekBarShowThumb, true);
+        barHeight = a.getDimensionPixelSize(R.styleable.AlphaSeekBar_alphaSeekBarHeight, 12);
+        borderColor = a.getColor(R.styleable.AlphaSeekBar_alphaSeekBarBorderColor, Color.BLACK);
+        borderRadius = a.getDimensionPixelSize(R.styleable.AlphaSeekBar_alphaSeekBarRadius, barHeight / 2);
+        borderSize = a.getDimensionPixelSize(R.styleable.AlphaSeekBar_alphaSeekBarBorderSize, 1);
+        mGridSize = a.getDimension(R.styleable.AlphaSeekBar_alphaSeekBarSizeGrid, 30);
+        mShowGrid = a.getBoolean(R.styleable.AlphaSeekBar_alphaSeekBarShowGrid, true);
+        maxProgress = a.getInteger(R.styleable.AlphaSeekBar_alphaSeekBarMaxProgress, 255);
+
+        setBarHeight(a.getDimensionPixelSize(R.styleable.AlphaSeekBar_alphaSeekBarHeight, dp2px(10)));
+        a.recycle();
+
+        mGridRectPaint = new Paint();
+        mGridRectPaint.setAntiAlias(true);
+        if (thumbDrawer == null) {
+            setThumbDrawer(new DefaultThumbDrawer(dp2px(6), Color.BLACK, Color.WHITE));
+        }
+    }
+
+    @Override
+    public void setMaxProgress(int maxProgress) {
+        this.maxProgress = 255;
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        Logger.i("init");
+        int startColor = Color.argb(0, 0, 0, 0);
+        int endColor = Color.argb(255, 0, 0, 0);
+        int[] toAlpha = {startColor, endColor};
+        LinearGradient mColorGradient;
+        if (isVertical()) {
+            //init paint
+            mColorGradient = new LinearGradient(0, 0, 0, barRect.height(), toAlpha, null, Shader.TileMode.CLAMP);
+        } else {
+            mColorGradient = new LinearGradient(0, 0, barRect.width(), 0, toAlpha, null, Shader.TileMode.CLAMP);
+        }
+        barRectPaint.setShader(mColorGradient);
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        Logger.i("onSizeChanged:w-" + w + " h-" + h);
+        init();
+    }
+
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        Logger.i("onDraw");
+        //clear
+        canvas.drawColor(Color.TRANSPARENT);
+
+        if (mShowGrid) {
+            canvas.save();
+            // draw transparent grid
+            mClipPath.reset();
+            mClipPath.addRoundRect(barRect, borderRadius, borderRadius, Path.Direction.CW);
+            canvas.clipPath(mClipPath);
+            int rowCount = 0;
+            while (rowCount * mGridSize <= barRect.height() + mGridSize) {
+                int columnCount = 0;
+                boolean odd = rowCount % 2 == 0;
+                mGrid.offsetTo(barRect.left, barRect.top + mGridSize * rowCount);
+                mGridRectPaint.setColor(odd ? GRID_GREY : GRID_WHITE);
+                while (columnCount * mGridSize < barRect.width() + mGridSize) {
+                    canvas.drawRect(mGrid, mGridRectPaint);
+                    mGridRectPaint.setColor(mGridRectPaint.getColor() == GRID_WHITE ? GRID_GREY : GRID_WHITE);
+                    mGrid.offset(mGridSize, 0);
+                    columnCount++;
+                }
+                rowCount++;
+            }
+            canvas.restore();
+        }
+
+        canvas.drawRoundRect(barRect, borderRadius, borderRadius, barRectPaint);
+        //
+        //draw color bar
+        if (borderSize > 0) {
+            canvas.drawRoundRect(barRect, borderRadius, borderRadius, borderPaint);
+        }
+
+        if (showThumb && thumbDrawer != null) {
+            float offsetX = 0f;
+            float offsetY = 0f;
+            if (isVertical()) {
+                float thumbPosition = (float) progress / maxProgress * thumbDragRect.height();
+                offsetX = thumbDragRect.left - thumbDrawer.getWidth() / 2f;
+                offsetY = thumbPosition + thumbDragRect.top - thumbDrawer.getHeight() / 2f;
+                if (offsetY > thumbDragRect.bottom) offsetY = thumbDragRect.bottom;
+            } else {
+                float thumbPosition = (float) progress / maxProgress * thumbDragRect.width();
+                offsetX = thumbPosition + thumbDragRect.left - thumbDrawer.getWidth() / 2f;
+                if (offsetX > thumbDragRect.right) offsetX = thumbDragRect.left;
+                offsetY = thumbDragRect.top - thumbDrawer.getHeight() / 2f;
+            }
+
+            thumbRect.offsetTo(offsetX, offsetY);
+            thumbDrawer.onDrawThumb(thumbRect, this, canvas);
+        }
+        super.onDraw(canvas);
+    }
+
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (!isEnabled()) {
+            return true;
+        }
+        float x = vertical ? event.getY() : event.getX();
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                if (barRect.contains(event.getX(), event.getY()) || thumbRect.contains(event.getX(), event.getY())) {
+                    movingBar = true;
+                    float value = calculateTouchPercent(x);
+                    setProgress((int) value);
+                    if (listener != null) {
+                        listener.onAlphaChangeListener(progress, getAlphaValue());
+                    }
+                }
+                break;
+            case MotionEvent.ACTION_MOVE:
+                getParent().requestDisallowInterceptTouchEvent(true);
+                if (movingBar) {
+                    float value = calculateTouchPercent(x);
+                    setProgress((int) value);
+                    if (listener != null) {
+                        listener.onAlphaChangeListener(progress, getAlphaValue());
+                    }
+                }
+                invalidate();
+                break;
+            case MotionEvent.ACTION_UP:
+                movingBar = false;
+                break;
+            default:
+        }
+        return true;
+    }
+
+    private float calculateTouchPercent(float x) {
+        if (isVertical()) {
+            return (x - thumbDragRect.top) / thumbDragRect.height() * maxProgress;
+        } else {
+            return (x - thumbDragRect.left) / thumbDragRect.width() * maxProgress;
+        }
+    }
+
+    public int getAlphaValue() {
+        return (int) (progress / (float) maxProgress * 255);
+    }
+
+    /**
+     * @param listener
+     */
+    public void setOnAlphaChangeListener(OnAlphaChangeListener listener) {
+        this.listener = listener;
+    }
+
+
+}

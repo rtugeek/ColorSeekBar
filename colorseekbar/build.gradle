@@ -1,11 +1,12 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 group='com.github.rtugeek'
 android {
-    compileSdkVersion 28
+    compileSdkVersion 30
     buildToolsVersion '28.0.3'
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 28
+        minSdkVersion 19
+        targetSdkVersion 30
         versionCode 8
         versionName "1.7.6"
 
@@ -22,6 +23,11 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    testImplementation 'junit:junit:4.13'
-    implementation 'androidx.annotation:annotation:1.1.0'
+    testImplementation 'junit:junit:4.13.2'
+    implementation 'androidx.annotation:annotation:1.2.0'
+    implementation "androidx.core:core-ktx:1.5.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }
