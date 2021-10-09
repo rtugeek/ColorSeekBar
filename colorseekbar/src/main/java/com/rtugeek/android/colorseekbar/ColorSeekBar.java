@@ -43,7 +43,7 @@ public class ColorSeekBar extends BaseSeekBar {
      * but the coordinate offset to (0,0)
      */
     private final RectF mCachedBitmapRect = new RectF();
-    private int mColorsToInvoke = -1;
+    private int mColorsToInvoke = Integer.MAX_VALUE;
 
     private final Paint mBitmapRectPaint = new Paint();
 
@@ -164,9 +164,9 @@ public class ColorSeekBar extends BaseSeekBar {
         mCachedBitmapCanvas = new Canvas(mCachedBitmap);
         mCachedBitmapCanvas.drawRect(mCachedBitmapRect, mBitmapRectPaint);
         cachedColors.clear();
-        if (mColorsToInvoke != -1) {
+        if (mColorsToInvoke != Integer.MAX_VALUE) {
             setColor(mColorsToInvoke);
-            mColorsToInvoke = -1;
+            mColorsToInvoke = Integer.MAX_VALUE;
         }
     }
 
@@ -280,8 +280,8 @@ public class ColorSeekBar extends BaseSeekBar {
     }
 
     @Override
-    protected void onBarTouch(int progress) {
-        setProgress(progress);
+    protected void onBarTouch(int newProgress) {
+        setProgress(newProgress);
         if (mOnColorChangeLister != null) {
             mOnColorChangeLister.onColorChangeListener(progress, getColor());
         }
