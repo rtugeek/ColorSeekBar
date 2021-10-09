@@ -214,21 +214,6 @@ public class ColorSeekBar extends BaseSeekBar {
         super.onDraw(canvas);
     }
 
-
-    private float calculateTouchPercent(float x) {
-        if (isVertical()) {
-            return (x - thumbDragRect.top) / thumbDragRect.height() * maxProgress;
-        } else {
-            return (x - thumbDragRect.left) / thumbDragRect.width() * maxProgress;
-        }
-    }
-
-    @Override
-    public void setEnabled(boolean enabled) {
-        super.setEnabled(enabled);
-    }
-
-
     /**
      * @param position
      * @return color
@@ -314,7 +299,7 @@ public class ColorSeekBar extends BaseSeekBar {
 
 
     public List<Integer> getColors() {
-        if (cachedColors.isEmpty()) {
+        if (cachedColors.isEmpty() && mCachedBitmap != null) {
             for (int i = 0; i < maxProgress; i++) {
                 cachedColors.add(pickColor(i));
             }
@@ -339,10 +324,12 @@ public class ColorSeekBar extends BaseSeekBar {
         }
         int withoutAlphaColor = Color.rgb(Color.red(color), Color.green(color), Color.blue(color));
         List<Integer> colors = getColors();
-        int position = colors.indexOf(withoutAlphaColor);
-        setProgress(position);
-        if (mOnColorChangeLister != null) {
-            mOnColorChangeLister.onColorChangeListener(progress, getColor());
+        int progress = colors.indexOf(withoutAlphaColor);
+        if (progress != -1) {
+            setProgress(progress);
+            if (mOnColorChangeLister != null) {
+                mOnColorChangeLister.onColorChangeListener(progress, getColor());
+            }
         }
     }
 

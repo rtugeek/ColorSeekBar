@@ -28,7 +28,6 @@ public class AlphaSeekBar extends BaseSeekBar {
     private final int GRID_GREY = 0xFFEDEDED;
 
     private OnAlphaChangeListener listener;
-    private boolean movingBar;
 
     private boolean mShowGrid = true;
     private final Path mClipPath = new Path();
@@ -192,6 +191,5 @@ public class AlphaSeekBar extends BaseSeekBar {
     public void setOnAlphaChangeListener(OnAlphaChangeListener listener) {
         this.listener = listener;
     }
-
 
 }
