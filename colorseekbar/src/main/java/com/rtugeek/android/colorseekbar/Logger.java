@@ -9,7 +9,7 @@ import android.view.View;
  */
 
 public class Logger {
-    private static boolean debug = true;
+    private static boolean debug = false;
     private static final String TAG = "ColorSeekBarLib";
 
     public static void i(String s) {

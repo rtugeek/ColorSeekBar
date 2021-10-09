@@ -2,8 +2,8 @@ package com.rtugeek.android.colorseekbar;
 
 public interface OnAlphaChangeListener {
     /**
-     * @param alphaBarPosition between 0-maxValue
+     * @param progress between 0-maxValue
      * @param alpha between 0-255
      */
-    void onAlphaChangeListener( int alphaBarPosition, int alpha);
+    void onAlphaChangeListener( int progress, int alpha);
 }

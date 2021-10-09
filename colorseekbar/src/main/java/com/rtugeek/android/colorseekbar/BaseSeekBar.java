@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -12,7 +13,7 @@ import androidx.annotation.RequiresApi;
 
 import com.rtugeek.android.colorseekbar.thumb.ThumbDrawer;
 
-public class BaseSeekBar extends View {
+public abstract class BaseSeekBar extends View {
     /**
      * Rectangle that specified thumb's bounds
      */
@@ -21,6 +22,12 @@ public class BaseSeekBar extends View {
      * Rectangle that specified seekbar's bounds
      */
     protected final RectF barRect = new RectF();
+    /**
+     * Rectangle that detect seekbar's touch event
+     * in horizontal, the rect's height calculate by Math.max(barHeight,thumbDrawer.getHeight)
+     * in vertical, the rect's width calculate by Math.max(barHeight,thumbDrawer.getWidth)
+     */
+    protected final RectF touchDetectRect = new RectF();
     /**
      * Rectangle that specified thumb's allowed drag bounds
      */
@@ -119,8 +126,11 @@ public class BaseSeekBar extends View {
             float barBottom = getHeight() - mPaddingSize;
 
             barRect.set(barLeft, barTop, barRight, barBottom);
-
             thumbDragRect.set(barRect.centerX(), barTop + borderRadius, barRect.centerX() + 1, barBottom - borderRadius);
+
+            int dragWidth = Math.max(barHeight, thumbDrawer.getWidth());
+            float dragLeft = thumbDragRect.left - dragWidth / 2f;
+            touchDetectRect.set(dragLeft, barTop, dragLeft + dragWidth, barBottom);
         } else {
             //init size
             int viewBottom = getHeight() - mPaddingSize;
@@ -134,6 +144,10 @@ public class BaseSeekBar extends View {
             barRect.set(barLeft, barTop, barRight, barBottom);
 
             thumbDragRect.set(barLeft + borderRadius, barRect.centerY(), barRect.right - borderRadius, barRect.centerY() + 1);
+
+            int dragHeight = Math.max(barHeight, thumbDrawer.getHeight());
+            float dragTop = barRect.centerY() - dragHeight / 2f;
+            touchDetectRect.set(barLeft, dragTop, barRight, dragTop + dragHeight);
         }
     }
 
@@ -275,6 +289,45 @@ public class BaseSeekBar extends View {
         return (int) (dpValue * scale + 0.5f);
     }
 
+    private boolean isMovingColorBar = false;
 
+    protected abstract void onBarTouch(int progress);
+
+    private float calculateTouchProgress(float x) {
+        if (isVertical()) {
+            return (x - touchDetectRect.top) / touchDetectRect.height() * maxProgress;
+        } else {
+            return (x - touchDetectRect.left) / touchDetectRect.width() * maxProgress;
+        }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (!isEnabled()) {
+            return true;
+        }
+        float x = vertical ? event.getY() : event.getX();
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                if (touchDetectRect.contains(event.getX(), event.getY())) {
+                    isMovingColorBar = true;
+                    onBarTouch((int) calculateTouchProgress(x));
+                }
+                break;
+            case MotionEvent.ACTION_MOVE:
+                getParent().requestDisallowInterceptTouchEvent(true);
+                if (isMovingColorBar) {
+                    onBarTouch((int) calculateTouchProgress(x));
+                }
+                invalidate();
+                break;
+            case MotionEvent.ACTION_UP:
+                performClick();
+                isMovingColorBar = false;
+                break;
+            default:
+        }
+        return true;
+    }
 }
 

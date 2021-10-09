@@ -10,25 +10,53 @@ import com.rtugeek.android.colorseekbar.BaseSeekBar;
 import com.rtugeek.android.colorseekbar.ColorSeekBar;
 
 public class DefaultThumbDrawer implements ThumbDrawer {
+
     private final Paint thumbStrokePaint = new Paint();
     private final Paint thumbSolidPaint = new Paint();
     private int size;
     private int borderColor = Color.BLACK;
-    private int borderSize = 3;
-    private int color;
+    private int solidColor = Color.BLACK;
+    private int borderSize;
     private final Path outerCircle = new Path();
     private final Path innerCircle = new Path();
 
     public DefaultThumbDrawer(int size, int solidColor, int borderColor) {
         this.size = size;
         this.borderColor = borderColor;
-        this.color = solidColor;
         thumbStrokePaint.setAntiAlias(true);
-        thumbStrokePaint.setStyle(Paint.Style.STROKE);
-        thumbStrokePaint.setColor(Color.GRAY);
-        thumbStrokePaint.setStrokeWidth(borderSize);
         thumbSolidPaint.setAntiAlias(true);
+
+        thumbStrokePaint.setStyle(Paint.Style.STROKE);
+
+        setBorderColor(borderColor);
+        setSolidColor(solidColor);
+        setBorderSize(3);
+    }
+
+    public int getBorderColor() {
+        return borderColor;
+    }
+
+    public void setBorderColor(int borderColor) {
+        this.borderColor = borderColor;
+        thumbStrokePaint.setColor(borderColor);
+    }
+
+    public int getBorderSize() {
+        return borderSize;
+    }
+
+    public int getSolidColor() {
+        return solidColor;
+    }
+
+    public void setSolidColor(int solidColor) {
+        this.solidColor = solidColor;
         thumbSolidPaint.setColor(solidColor);
+    }
+
+    public void setBorderSize(int borderSize) {
+        this.borderSize = borderSize;
         thumbStrokePaint.setStrokeWidth(borderSize);
     }
 
@@ -42,7 +70,6 @@ public class DefaultThumbDrawer implements ThumbDrawer {
 //            thumbSolidPaint.setColor(((ColorSeekBar) seekBar).getColor());
 //        }
         float outerRadius = thumbBounds.height() / 2f;
-        thumbStrokePaint.setColor(seekBar.getBorderColor());
         outerCircle.addCircle(centerX, centerY, outerRadius, Path.Direction.CW);
         innerCircle.addCircle(centerX, centerY, outerRadius - 10, Path.Direction.CW);
         outerCircle.op(innerCircle, Path.Op.DIFFERENCE);

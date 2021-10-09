@@ -165,48 +165,11 @@ public class AlphaSeekBar extends BaseSeekBar {
         super.onDraw(canvas);
     }
 
-
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (!isEnabled()) {
-            return true;
-        }
-        float x = vertical ? event.getY() : event.getX();
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                if (barRect.contains(event.getX(), event.getY()) || thumbRect.contains(event.getX(), event.getY())) {
-                    movingBar = true;
-                    float value = calculateTouchPercent(x);
-                    setProgress((int) value);
-                    if (listener != null) {
-                        listener.onAlphaChangeListener(progress, getAlphaValue());
-                    }
-                }
-                break;
-            case MotionEvent.ACTION_MOVE:
-                getParent().requestDisallowInterceptTouchEvent(true);
-                if (movingBar) {
-                    float value = calculateTouchPercent(x);
-                    setProgress((int) value);
-                    if (listener != null) {
-                        listener.onAlphaChangeListener(progress, getAlphaValue());
-                    }
-                }
-                invalidate();
-                break;
-            case MotionEvent.ACTION_UP:
-                movingBar = false;
-                break;
-            default:
-        }
-        return true;
-    }
-
-    private float calculateTouchPercent(float x) {
-        if (isVertical()) {
-            return (x - thumbDragRect.top) / thumbDragRect.height() * maxProgress;
-        } else {
-            return (x - thumbDragRect.left) / thumbDragRect.width() * maxProgress;
+    protected void onBarTouch(int progress) {
+        setProgress(progress);
+        if (listener != null) {
+            listener.onAlphaChangeListener(progress, getAlphaValue());
         }
     }
 

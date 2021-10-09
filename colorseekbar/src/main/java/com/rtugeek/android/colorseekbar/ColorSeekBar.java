@@ -96,7 +96,7 @@ public class ColorSeekBar extends BaseSeekBar {
         }
 
         if (thumbDrawer == null) {
-            setThumbDrawer(new DefaultThumbDrawer(dp2px(16), Color.WHITE, Color.BLACK));
+            setThumbDrawer(new DefaultThumbDrawer(barHeight + dp2px(6), Color.WHITE, Color.BLACK));
         }
 
 //        setBackgroundColor(backgroundColor);
@@ -179,10 +179,15 @@ public class ColorSeekBar extends BaseSeekBar {
         canvas.drawRoundRect(barRect, borderRadius, borderRadius, barRectPaint);
         //draw mCachedBitmapColor bitmap
         mCachedBitmapCanvas.drawRect(mCachedBitmapRect, mBitmapRectPaint);
+
+        //draw touchDetectRect, debug only
+        //canvas.drawRect(touchDetectRect, borderPaint);
+
         // drawBorder
         if (borderSize > 0) {
             canvas.drawRoundRect(barRect, borderRadius, borderRadius, borderPaint);
-//            canvas.drawRect(thumbDragRect, borderPaint);
+            //draw thumbDragRect, debug only
+            //canvas.drawRect(thumbDragRect, borderPaint);
         }
 
         if (showThumb && thumbDrawer != null) {
@@ -209,42 +214,6 @@ public class ColorSeekBar extends BaseSeekBar {
         super.onDraw(canvas);
     }
 
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (!isEnabled()) {
-            return true;
-        }
-        float x = vertical ? event.getY() : event.getX();
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                if (barRect.contains(event.getX(), event.getY()) || thumbRect.contains(event.getX(), event.getY())) {
-                    mMovingColorBar = true;
-                    float value = calculateTouchPercent(x);
-                    setProgress((int) value);
-                    if (mOnColorChangeLister != null) {
-                        mOnColorChangeLister.onColorChangeListener(progress, getColor());
-                    }
-                }
-                break;
-            case MotionEvent.ACTION_MOVE:
-                getParent().requestDisallowInterceptTouchEvent(true);
-                if (mMovingColorBar) {
-                    float value = calculateTouchPercent(x);
-                    setProgress((int) value);
-                    if (mOnColorChangeLister != null) {
-                        mOnColorChangeLister.onColorChangeListener(progress, getColor());
-                    }
-                }
-                invalidate();
-                break;
-            case MotionEvent.ACTION_UP:
-                mMovingColorBar = false;
-                break;
-            default:
-        }
-        return true;
-    }
 
     private float calculateTouchPercent(float x) {
         if (isVertical()) {
@@ -308,6 +277,14 @@ public class ColorSeekBar extends BaseSeekBar {
     public int dp2px(float dpValue) {
         final float scale = mContext.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
+    }
+
+    @Override
+    protected void onBarTouch(int progress) {
+        setProgress(progress);
+        if (mOnColorChangeLister != null) {
+            mOnColorChangeLister.onColorChangeListener(progress, getColor());
+        }
     }
 
     /**
