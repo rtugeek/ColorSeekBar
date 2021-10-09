@@ -60,7 +60,7 @@ allprojects {
 Step 2. Add the dependency
 
 ```
-implementation 'com.github.rtugeek:colorseekbar:2.0.0'
+implementation 'com.github.rtugeek:colorseekbar:2.0.1'
 ```
 
 ## Usage
@@ -92,6 +92,9 @@ colorSeekBar.borderSize = 10
 colorSeekBar.thumbDrawer = DefaultThumbDrawer(30,Color.WHITE,Color.BLUE)
 colorSeekBar.isVertical = false
 colorSeekBar.barHeight = 10
+//lock thumb
+colorSeekBar.isEnabled =false
+
 
 alphaSeekBar.maxProgress = 1000
 alphaSeekBar.borderColor = Color.BLACK
