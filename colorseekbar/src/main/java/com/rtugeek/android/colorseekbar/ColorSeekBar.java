@@ -12,7 +12,6 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 
 import androidx.annotation.ArrayRes;
 
@@ -32,12 +31,12 @@ public class ColorSeekBar extends BaseSeekBar {
 
     private OnColorChangeListener mOnColorChangeLister;
     private Context mContext;
-    private boolean mMovingColorBar;
     /**
      * A bitmap to draw gradient color, this bitmap make it easier to get selected color by {@link Bitmap#getPixel(int, int)}.
      * {@link BaseSeekBar#thumbDragRect}
      */
     private Bitmap mCachedBitmap;
+    private final List<Integer> cachedColors = new ArrayList<>();
 
     /**
      * Specify {@link #mCachedBitmap}'s rectangle, this rectangle equals to {@link #thumbDragRect}
@@ -163,6 +162,8 @@ public class ColorSeekBar extends BaseSeekBar {
         init();
         mCachedBitmap = Bitmap.createBitmap((int) mCachedBitmapRect.width(), (int) mCachedBitmapRect.height(), Bitmap.Config.ARGB_8888);
         mCachedBitmapCanvas = new Canvas(mCachedBitmap);
+        mCachedBitmapCanvas.drawRect(mCachedBitmapRect, mBitmapRectPaint);
+        cachedColors.clear();
         if (mColorsToInvoke != -1) {
             setColor(mColorsToInvoke);
             mColorsToInvoke = -1;
@@ -178,7 +179,6 @@ public class ColorSeekBar extends BaseSeekBar {
         //draw color bar
         canvas.drawRoundRect(barRect, borderRadius, borderRadius, barRectPaint);
         //draw mCachedBitmapColor bitmap
-        mCachedBitmapCanvas.drawRect(mCachedBitmapRect, mBitmapRectPaint);
 
         //draw touchDetectRect, debug only
         //canvas.drawRect(touchDetectRect, borderPaint);
@@ -307,31 +307,19 @@ public class ColorSeekBar extends BaseSeekBar {
 
     /**
      * @return the color's position in the bar, if not in the bar ,return -1;
-     * @deprecated use {@link #getColorPosition(int)} instead.
      */
-    @Deprecated
-    public int getColorIndexPosition(int color) {
-        return getColorPosition(color);
-    }
-
-    /**
-     * @return the color's position in the bar, if not in the bar ,return -1;
-     */
-    public int getColorPosition(int color) {
-        for (int i = 0; i < maxProgress; i++) {
-            int c = pickColor(i);
-            if (color == c) return i;
-        }
-        return -1;
+    public int getProgressByColor(int color) {
+        return getColors().indexOf(color);
     }
 
 
     public List<Integer> getColors() {
-        List<Integer> colors = new ArrayList<>();
-        for (int i = 0; i < maxProgress; i++) {
-            colors.add(pickColor(i));
+        if (cachedColors.isEmpty()) {
+            for (int i = 0; i < maxProgress; i++) {
+                cachedColors.add(pickColor(i));
+            }
         }
-        return colors;
+        return cachedColors;
     }
 
 
@@ -353,7 +341,14 @@ public class ColorSeekBar extends BaseSeekBar {
         List<Integer> colors = getColors();
         int position = colors.indexOf(withoutAlphaColor);
         setProgress(position);
+        if (mOnColorChangeLister != null) {
+            mOnColorChangeLister.onColorChangeListener(progress, getColor());
+        }
     }
 
-
+    @Override
+    public void setMaxProgress(int maxProgress) {
+        super.setMaxProgress(maxProgress);
+        cachedColors.clear();
+    }
 }

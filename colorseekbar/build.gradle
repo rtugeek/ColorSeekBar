@@ -7,8 +7,6 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 30
-        versionCode 8
-        versionName "1.7.6"
 
     }
     buildTypes {
@@ -25,7 +23,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.13.2'
     implementation 'androidx.annotation:annotation:1.2.0'
-    implementation "androidx.core:core-ktx:1.5.0"
+    implementation "androidx.core:core-ktx:1.6.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 repositories {

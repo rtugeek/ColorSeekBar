@@ -19,6 +19,7 @@ public class DefaultThumbDrawer implements ThumbDrawer {
     private int borderSize;
     private final Path outerCircle = new Path();
     private final Path innerCircle = new Path();
+    private boolean userColorSeekBarColor = false;
 
     public DefaultThumbDrawer(int size, int solidColor, int borderColor) {
         this.size = size;
@@ -60,15 +61,27 @@ public class DefaultThumbDrawer implements ThumbDrawer {
         thumbStrokePaint.setStrokeWidth(borderSize);
     }
 
+    public boolean isUserColorSeekBarColor() {
+        return userColorSeekBarColor;
+    }
+
+    /**
+     * @param userColorSeekBarColor If true, the thumb's solid color will use ColorSeekBar's
+     *                              selected color
+     */
+    public void setUserColorSeekBarColor(boolean userColorSeekBarColor) {
+        this.userColorSeekBarColor = userColorSeekBarColor;
+    }
+
     @Override
     public void onDrawThumb(RectF thumbBounds, BaseSeekBar seekBar, Canvas canvas) {
         float centerX = thumbBounds.centerX();
         float centerY = thumbBounds.centerY();
         outerCircle.reset();
         innerCircle.reset();
-//        if (seekBar instanceof ColorSeekBar) {
-//            thumbSolidPaint.setColor(((ColorSeekBar) seekBar).getColor());
-//        }
+        if (userColorSeekBarColor && seekBar instanceof ColorSeekBar) {
+            thumbSolidPaint.setColor(((ColorSeekBar) seekBar).getColor());
+        }
         float outerRadius = thumbBounds.height() / 2f;
         outerCircle.addCircle(centerX, centerY, outerRadius, Path.Direction.CW);
         innerCircle.addCircle(centerX, centerY, outerRadius - 10, Path.Direction.CW);

@@ -67,9 +67,11 @@ class ColorSeekBarFragment : Fragment() {
 
         seek_thumb_size.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                colorSeekBar.thumbDrawer = DefaultThumbDrawer(
+                val defaultThumbDrawer = DefaultThumbDrawer(
                     Utils.dp2px(requireContext(), progress.toFloat()), Color.WHITE, Color.BLACK
                 )
+                defaultThumbDrawer.isUserColorSeekBarColor = true
+                colorSeekBar.thumbDrawer = defaultThumbDrawer
                 tv_thumb_size.text = "Thumb Size: ${progress}dp"
             }
 
@@ -84,6 +86,7 @@ class ColorSeekBarFragment : Fragment() {
         chk_show_thumb.setOnCheckedChangeListener { buttonView, isChecked ->
             colorSeekBar.isShowThumb = isChecked
         }
+
         seek_radius.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 colorSeekBar.borderRadius = progress
@@ -94,9 +97,9 @@ class ColorSeekBarFragment : Fragment() {
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
             override fun onStopTrackingTouch(seekBar: SeekBar) {}
         })
+        colorSeekBar.color = -4951512
 
     }
-
 
     override fun onStop() {
         super.onStop()

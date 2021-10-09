@@ -92,6 +92,7 @@ colorSeekBar.borderSize = 10
 colorSeekBar.thumbDrawer = DefaultThumbDrawer(30,Color.WHITE,Color.BLUE)
 colorSeekBar.isVertical = false
 colorSeekBar.barHeight = 10
+colorSeekBar.color = Color.BLACK // or colorSeekBar.progress = 100
 //lock thumb
 colorSeekBar.isEnabled =false
 
@@ -103,6 +104,8 @@ alphaSeekBar.borderSize = 10
 alphaSeekBar.thumbDrawer = DefaultThumbDrawer(30,Color.WHITE,Color.BLUE)
 alphaSeekBar.isVertical = false
 alphaSeekBar.barHeight = 10
+alphaSeekBar.alphaValue = 255 // or alphaSeekBar.progress = 100
+
 ```
 
 Listener

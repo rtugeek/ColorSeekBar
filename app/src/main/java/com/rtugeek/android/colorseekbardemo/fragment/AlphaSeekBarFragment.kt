@@ -122,7 +122,7 @@ class AlphaSeekBarFragment : Fragment() {
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
             override fun onStopTrackingTouch(seekBar: SeekBar) {}
         })
-
+        alphaSeekBar.alphaValue = 200
     }
 
     companion object {
@@ -139,4 +139,5 @@ class AlphaSeekBarFragment : Fragment() {
         fun newInstance() =
             AlphaSeekBarFragment()
     }
+
 }

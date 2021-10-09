@@ -14,6 +14,8 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
+import androidx.annotation.IntRange;
+
 import com.rtugeek.android.colorseekbar.thumb.DefaultThumbDrawer;
 
 
@@ -175,6 +177,13 @@ public class AlphaSeekBar extends BaseSeekBar {
 
     public int getAlphaValue() {
         return (int) (progress / (float) maxProgress * 255);
+    }
+
+    public void setAlphaValue(@IntRange(from = 0, to = 255) int alpha) {
+        setProgress((int) (alpha / 255f * maxProgress));
+        if (listener != null) {
+            listener.onAlphaChangeListener(progress, getAlphaValue());
+        }
     }
 
     /**
