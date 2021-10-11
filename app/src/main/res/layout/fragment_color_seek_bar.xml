@@ -23,7 +23,7 @@
         android:layout_height="200dp"
         android:layout_margin="6dp"
         app:colorSeekBarBarHeight="5dp"
-        app:colorSeekBarColorSeeds="@array/material_colors" />
+        app:colorSeekBarColorSeeds="@array/text_colors" />
 
     <LinearLayout
         android:layout_width="match_parent"

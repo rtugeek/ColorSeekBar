@@ -8,10 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.rtugeek.android.colorseekbar.thumb.DefaultThumbDrawer
 import com.rtugeek.android.colorseekbardemo.Utils
 import com.rtugeek.android.colorseekbardemo.databinding.FragmentColorSeekBarBinding
 import kotlinx.android.synthetic.main.fragment_color_seek_bar.*
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * A placeholder fragment containing a simple view.
@@ -32,16 +35,14 @@ class ColorSeekBarFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 //        colorSeekBar.thumbDrawer = DefaultThumbDrawer(15, Color.BLACK, 3, Color.WHITE)
+        colorSeekBar.color = -16777216
         colorSeekBar.setOnColorChangeListener { progress, color ->
             textView.setTextColor(colorSeekBar.color)
             Log.i(TAG, "===progress:$progress-color:$color===")
         }
-
         chkVertical.setOnCheckedChangeListener { _, isChecked ->
             colorSeekBar.isVertical = isChecked
         }
-
-
         seek_height.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 colorSeekBar.barHeight = Utils.dp2px(requireContext(), progress.toFloat())
@@ -60,6 +61,7 @@ class ColorSeekBarFragment : Fragment() {
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
             override fun onStopTrackingTouch(seekBar: SeekBar) {}
         })
+
 
         seek_thumb_size.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
@@ -94,8 +96,13 @@ class ColorSeekBarFragment : Fragment() {
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
             override fun onStopTrackingTouch(seekBar: SeekBar) {}
         })
-        colorSeekBar.color = -4951512
 
+        lifecycleScope.launch {
+            delay(3000)
+            colorSeekBar.maxProgress = 1000
+            colorSeekBar.color = -16604467
+            println(colorSeekBar.color)
+        }
     }
 
     override fun onStop() {

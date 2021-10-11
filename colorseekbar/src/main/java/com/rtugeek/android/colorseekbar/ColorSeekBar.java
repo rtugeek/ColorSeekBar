@@ -11,9 +11,11 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.os.Build;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 
 import androidx.annotation.ArrayRes;
+import androidx.annotation.Nullable;
 
 import com.rtugeek.android.colorseekbar.thumb.DefaultThumbDrawer;
 
@@ -36,11 +38,11 @@ public class ColorSeekBar extends BaseSeekBar {
      * selected color by {@link Bitmap#getPixel(int, int)}.
      * {@link BaseSeekBar#thumbDragRect}
      */
-    private Bitmap mCachedBitmap;
+    private Bitmap mCacheColorBitmap;
     private final List<Integer> cachedColors = new ArrayList<>();
 
     /**
-     * Specify {@link #mCachedBitmap}'s rectangle, this rectangle equals to {@link #thumbDragRect}
+     * Specify {@link #mCacheColorBitmap}'s rectangle, this rectangle equals to {@link #thumbDragRect}
      * but the coordinate offset to (0,0)
      */
     private final RectF mCachedBitmapRect = new RectF();
@@ -164,16 +166,23 @@ public class ColorSeekBar extends BaseSeekBar {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         Logger.i("onSizeChanged:w-" + w + " h-" + h);
-
         init();
-        mCachedBitmap = Bitmap.createBitmap((int) mCachedBitmapRect.width(), (int) mCachedBitmapRect.height(), Bitmap.Config.ARGB_8888);
-        mCachedBitmapCanvas = new Canvas(mCachedBitmap);
+        updateCachedColors();
+    }
+
+    private void updateCachedColors() {
+        mCacheColorBitmap = Bitmap.createBitmap((int) mCachedBitmapRect.width(), (int) mCachedBitmapRect.height(), Bitmap.Config.ARGB_8888);
+        mCachedBitmapCanvas = new Canvas(mCacheColorBitmap);
         mCachedBitmapCanvas.drawRect(mCachedBitmapRect, mBitmapRectPaint);
         cachedColors.clear();
+        for (int i = 0; i <= maxProgress; i++) {
+            cachedColors.add(pickColorFromBitmap(mCacheColorBitmap, i / (float) maxProgress));
+        }
         if (mColorsToInvoke != Integer.MAX_VALUE) {
             setColor(mColorsToInvoke);
             mColorsToInvoke = Integer.MAX_VALUE;
         }
+        mCacheColorBitmap.recycle();
     }
 
     @Override
@@ -221,31 +230,32 @@ public class ColorSeekBar extends BaseSeekBar {
     }
 
     /**
-     * @param position
+     * @param progress
      * @return color
      */
-    private int pickColor(int position) {
-        return pickColor(position / (float) maxProgress);
+    private int pickColor(int progress) {
+        if (progress < 0) return Integer.MAX_VALUE;
+        if (progress > maxProgress) return Integer.MAX_VALUE;
+        if (progress >= getColors().size()) return Integer.MAX_VALUE;
+        return getColors().get(progress);
     }
 
     /**
      * @param percent
      * @return color
      */
-    private int pickColor(float percent) {
+    private int pickColorFromBitmap(Bitmap bitmap, float percent) {
         Logger.i("pickColor:" + percent);
         if (percent <= 0.0) {
             return mColorSeeds[0];
         }
-
-
         if (percent >= 1) {
             return mColorSeeds[mColorSeeds.length - 1];
         }
         if (isVertical()) {
-            return mCachedBitmap.getPixel(mCachedBitmap.getWidth() - 1, (int) (percent * mCachedBitmap.getHeight()));
+            return bitmap.getPixel(bitmap.getWidth() - 1, (int) (percent * bitmap.getHeight()));
         } else {
-            return mCachedBitmap.getPixel((int) (percent * mCachedBitmap.getWidth()), mCachedBitmap.getHeight() - 1);
+            return bitmap.getPixel((int) (percent * bitmap.getWidth()), bitmap.getHeight() - 1);
         }
     }
 
@@ -305,11 +315,6 @@ public class ColorSeekBar extends BaseSeekBar {
 
 
     public List<Integer> getColors() {
-        if (cachedColors.isEmpty() && mCachedBitmap != null) {
-            for (int i = 0; i < maxProgress; i++) {
-                cachedColors.add(pickColor(i));
-            }
-        }
         return cachedColors;
     }
 
@@ -324,13 +329,12 @@ public class ColorSeekBar extends BaseSeekBar {
      * @param color
      */
     public void setColor(int color) {
-        if (mCachedBitmap == null) {
+        if (mCacheColorBitmap == null) {
             mColorsToInvoke = color;
             return;
         }
-        int withoutAlphaColor = Color.rgb(Color.red(color), Color.green(color), Color.blue(color));
         List<Integer> colors = getColors();
-        int progress = colors.indexOf(withoutAlphaColor);
+        int progress = colors.indexOf(color);
         if (progress != -1) {
             setProgress(progress);
             if (mOnColorChangeLister != null) {
@@ -342,6 +346,6 @@ public class ColorSeekBar extends BaseSeekBar {
     @Override
     public void setMaxProgress(int maxProgress) {
         super.setMaxProgress(maxProgress);
-        cachedColors.clear();
+        updateCachedColors();
     }
 }

@@ -329,5 +329,7 @@ public abstract class BaseSeekBar extends View {
         }
         return true;
     }
+
+
 }
 
