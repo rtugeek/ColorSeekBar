@@ -7,12 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.rtugeek.android.colorseekbar.thumb.DefaultThumbDrawer
-import com.rtugeek.android.colorseekbar.thumb.DrawableThumbDrawer
-import com.rtugeek.android.colorseekbar.thumb.ThumbDrawer
-import com.rtugeek.android.colorseekbardemo.R
 import com.rtugeek.android.colorseekbardemo.Utils
 import com.rtugeek.android.colorseekbardemo.databinding.FragmentColorSeekBarBinding
 import kotlinx.android.synthetic.main.fragment_color_seek_bar.*
@@ -67,11 +63,12 @@ class ColorSeekBarFragment : Fragment() {
 
         seek_thumb_size.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                val defaultThumbDrawer = DefaultThumbDrawer(
+                val thumbDrawer = DefaultThumbDrawer(
                     Utils.dp2px(requireContext(), progress.toFloat()), Color.WHITE, Color.BLACK
                 )
-                defaultThumbDrawer.isUserColorSeekBarColor = true
-                colorSeekBar.thumbDrawer = defaultThumbDrawer
+                thumbDrawer.ringBorderSize = 1
+                thumbDrawer.ringSize = 5
+                colorSeekBar.thumbDrawer = thumbDrawer
                 tv_thumb_size.text = "Thumb Size: ${progress}dp"
             }
 

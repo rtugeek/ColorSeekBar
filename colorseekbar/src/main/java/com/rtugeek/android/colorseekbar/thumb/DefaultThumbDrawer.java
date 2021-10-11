@@ -13,64 +13,62 @@ public class DefaultThumbDrawer implements ThumbDrawer {
 
     private final Paint thumbStrokePaint = new Paint();
     private final Paint thumbSolidPaint = new Paint();
+    private final Paint thumbColorPaint = new Paint();
     private int size;
-    private int borderColor = Color.BLACK;
-    private int solidColor = Color.BLACK;
-    private int borderSize;
+    private int ringBorderColor = Color.BLACK;
+    private int ringSolidColor = Color.BLACK;
+    private int ringBorderSize;
     private final Path outerCircle = new Path();
     private final Path innerCircle = new Path();
-    private boolean userColorSeekBarColor = false;
+    private int ringSize = 10;
 
-    public DefaultThumbDrawer(int size, int solidColor, int borderColor) {
+    public DefaultThumbDrawer(int size, int ringSolidColor, int ringBorderColor) {
         this.size = size;
-        this.borderColor = borderColor;
+        this.ringBorderColor = ringBorderColor;
         thumbStrokePaint.setAntiAlias(true);
         thumbSolidPaint.setAntiAlias(true);
+        thumbColorPaint.setAntiAlias(true);
 
         thumbStrokePaint.setStyle(Paint.Style.STROKE);
 
-        setBorderColor(borderColor);
-        setSolidColor(solidColor);
-        setBorderSize(3);
+        setRingBorderColor(ringBorderColor);
+        setRingSolidColor(ringSolidColor);
+        setRingBorderSize(3);
     }
 
-    public int getBorderColor() {
-        return borderColor;
+    public int getRingBorderColor() {
+        return ringBorderColor;
     }
 
-    public void setBorderColor(int borderColor) {
-        this.borderColor = borderColor;
-        thumbStrokePaint.setColor(borderColor);
+    public void setRingBorderColor(int ringBorderColor) {
+        this.ringBorderColor = ringBorderColor;
+        thumbStrokePaint.setColor(ringBorderColor);
     }
 
-    public int getBorderSize() {
-        return borderSize;
+    public int getRingBorderSize() {
+        return ringBorderSize;
     }
 
-    public int getSolidColor() {
-        return solidColor;
+    public int getRingSolidColor() {
+        return ringSolidColor;
     }
 
-    public void setSolidColor(int solidColor) {
-        this.solidColor = solidColor;
-        thumbSolidPaint.setColor(solidColor);
+    public void setRingSolidColor(int ringSolidColor) {
+        this.ringSolidColor = ringSolidColor;
+        thumbSolidPaint.setColor(ringSolidColor);
     }
 
-    public void setBorderSize(int borderSize) {
-        this.borderSize = borderSize;
-        thumbStrokePaint.setStrokeWidth(borderSize);
+    public void setRingBorderSize(int ringBorderSize) {
+        this.ringBorderSize = ringBorderSize;
+        thumbStrokePaint.setStrokeWidth(ringBorderSize);
     }
 
-    public boolean isUserColorSeekBarColor() {
-        return userColorSeekBarColor;
+    public int getRingSize() {
+        return ringSize;
     }
 
-    /**
-     * @param userColorSeekBarColor If true, the thumb's solid color will use ColorSeekBar's
-     *                              selected color
-     */
-    public void setUserColorSeekBarColor(boolean userColorSeekBarColor) {
-        this.userColorSeekBarColor = userColorSeekBarColor;
+    public void setRingSize(int ringSize) {
+        this.ringSize = ringSize;
     }
 
     @Override
@@ -79,13 +77,15 @@ public class DefaultThumbDrawer implements ThumbDrawer {
         float centerY = thumbBounds.centerY();
         outerCircle.reset();
         innerCircle.reset();
-        if (userColorSeekBarColor && seekBar instanceof ColorSeekBar) {
-            thumbSolidPaint.setColor(((ColorSeekBar) seekBar).getColor());
+        if (seekBar instanceof ColorSeekBar) {
+            thumbColorPaint.setColor(((ColorSeekBar) seekBar).getColor());
         }
         float outerRadius = thumbBounds.height() / 2f;
+        float innerRadius = outerRadius - ringSize;
         outerCircle.addCircle(centerX, centerY, outerRadius, Path.Direction.CW);
-        innerCircle.addCircle(centerX, centerY, outerRadius - 10, Path.Direction.CW);
+        innerCircle.addCircle(centerX, centerY, innerRadius, Path.Direction.CW);
         outerCircle.op(innerCircle, Path.Op.DIFFERENCE);
+        canvas.drawCircle(centerX, centerY, innerRadius, thumbColorPaint);
         canvas.drawPath(outerCircle, thumbSolidPaint);
         canvas.drawPath(outerCircle, thumbStrokePaint);
     }

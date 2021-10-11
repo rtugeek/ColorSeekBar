@@ -32,7 +32,8 @@ public class ColorSeekBar extends BaseSeekBar {
     private OnColorChangeListener mOnColorChangeLister;
     private Context mContext;
     /**
-     * A bitmap to draw gradient color, this bitmap make it easier to get selected color by {@link Bitmap#getPixel(int, int)}.
+     * A bitmap to draw gradient color, this bitmap make it easier to get
+     * selected color by {@link Bitmap#getPixel(int, int)}.
      * {@link BaseSeekBar#thumbDragRect}
      */
     private Bitmap mCachedBitmap;
@@ -83,7 +84,7 @@ public class ColorSeekBar extends BaseSeekBar {
         barHeight = a.getDimensionPixelSize(R.styleable.ColorSeekBar_colorSeekBarBarHeight, dp2px(12));
         borderRadius = a.getDimensionPixelSize(R.styleable.ColorSeekBar_colorSeekBarRadius, barHeight / 2);
         borderColor = a.getColor(R.styleable.ColorSeekBar_colorSeekBarBorderColor, Color.BLACK);
-        borderSize = a.getDimensionPixelSize(R.styleable.ColorSeekBar_colorSeekBarBorderSize, 1);
+        borderSize = a.getDimensionPixelSize(R.styleable.ColorSeekBar_colorSeekBarBorderSize, 0);
 
         a.recycle();
 
@@ -95,7 +96,12 @@ public class ColorSeekBar extends BaseSeekBar {
         }
 
         if (thumbDrawer == null) {
-            setThumbDrawer(new DefaultThumbDrawer(barHeight + dp2px(6), Color.WHITE, Color.BLACK));
+            int minThumbSize = dp2px(16);
+            int defaultThumbSize = barHeight + dp2px(8);
+            DefaultThumbDrawer thumbDrawer = new DefaultThumbDrawer(Math.max(minThumbSize, defaultThumbSize), Color.WHITE, Color.BLACK);
+            thumbDrawer.setRingSize(dp2px(2));
+            thumbDrawer.setRingBorderSize(dp2px(1));
+            setThumbDrawer(thumbDrawer);
         }
 
 //        setBackgroundColor(backgroundColor);
