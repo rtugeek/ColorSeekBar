@@ -184,10 +184,10 @@ public class AlphaSeekBar extends BaseSeekBar {
     }
 
     @Override
-    protected void onBarTouch(int progress) {
-        setProgress(progress);
+    protected void onBarTouch(int newProgress) {
+        setProgress(newProgress);
         if (listener != null) {
-            listener.onAlphaChangeListener(progress, getAlphaValue());
+            listener.onAlphaChangeListener(this.progress, getAlphaValue());
         }
     }
 
@@ -206,7 +206,17 @@ public class AlphaSeekBar extends BaseSeekBar {
     }
 
     public void setAlphaValue(@IntRange(from = 0, to = 255) int alpha) {
-        setProgress((int) (alpha / 255f * maxProgress));
+        float percent = alpha / 255f;
+        if (isVertical()) {
+            if (direction == Direction.BOTTOM_TO_TOP) {
+                percent = 1 - percent;
+            }
+        } else {
+            if (direction == Direction.RIGHT_TO_LEFT) {
+                percent = 1 - percent;
+            }
+        }
+        setProgress((int) (percent * maxProgress));
         if (listener != null) {
             listener.onAlphaChangeListener(progress, getAlphaValue());
         }

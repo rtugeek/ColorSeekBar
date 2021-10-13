@@ -50,6 +50,7 @@ class AlphaSeekBarFragment : Fragment() {
             ),
             50, 50
         )
+        alphaSeekBar.alphaValue = 200
         alphaSeekBar.borderColor = Color.BLACK
         alphaSeekBar.setOnAlphaChangeListener { progress, alpha ->
             Log.i("AlphaSeekBarFragment", "===progress:$progress-alpha:$alpha===")
@@ -116,7 +117,6 @@ class AlphaSeekBarFragment : Fragment() {
                 tv_radius.text =
                     String.format("Bar Radius: %dpx", progress)
             }
-
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
             override fun onStopTrackingTouch(seekBar: SeekBar) {}
         })
