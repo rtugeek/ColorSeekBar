@@ -43,7 +43,6 @@ class AlphaSeekBarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        alphaSeekBar.progress = 255
         alphaSeekBar.thumbDrawer = DrawableThumbDrawer(
             ContextCompat.getDrawable(
                 requireContext(),
@@ -51,7 +50,6 @@ class AlphaSeekBarFragment : Fragment() {
             ),
             50, 50
         )
-        alphaSeekBar.maxProgress = 1000
         alphaSeekBar.borderColor = Color.BLACK
         alphaSeekBar.setOnAlphaChangeListener { progress, alpha ->
             Log.i("AlphaSeekBarFragment", "===progress:$progress-alpha:$alpha===")
@@ -122,7 +120,6 @@ class AlphaSeekBarFragment : Fragment() {
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
             override fun onStopTrackingTouch(seekBar: SeekBar) {}
         })
-        alphaSeekBar.alphaValue = 200
     }
 
     companion object {

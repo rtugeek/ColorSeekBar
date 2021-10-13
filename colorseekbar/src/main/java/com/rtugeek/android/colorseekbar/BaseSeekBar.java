@@ -293,7 +293,7 @@ public abstract class BaseSeekBar extends View {
 
     protected abstract void onBarTouch(int progress);
 
-    private float calculateTouchProgress(float x) {
+    protected float calculateTouchProgress(float x) {
         if (isVertical()) {
             return (x - touchDetectRect.top) / touchDetectRect.height() * maxProgress;
         } else {

@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 
+import com.rtugeek.android.colorseekbar.AlphaSeekBar;
 import com.rtugeek.android.colorseekbar.BaseSeekBar;
 import com.rtugeek.android.colorseekbar.ColorSeekBar;
 
@@ -79,6 +80,8 @@ public class DefaultThumbDrawer implements ThumbDrawer {
         innerCircle.reset();
         if (seekBar instanceof ColorSeekBar) {
             thumbColorPaint.setColor(((ColorSeekBar) seekBar).getColor());
+        } else if (seekBar instanceof AlphaSeekBar) {
+            thumbColorPaint.setAlpha(((AlphaSeekBar) seekBar).getAlphaValue());
         }
         float outerRadius = thumbBounds.height() / 2f;
         float innerRadius = outerRadius - ringSize;

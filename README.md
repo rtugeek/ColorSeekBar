@@ -37,6 +37,12 @@
     <attr name="alphaSeekBarMaxProgress" format="integer" />
     <attr name="alphaSeekBarBorderColor" format="color" />
     <attr name="alphaSeekBarBorderSize" format="dimension" />
+    <attr name="alphaSeekBarDirection" format="enum">
+        <enum name="LEFT_TO_RIGHT" value="0"/>
+        <enum name="RIGHT_TO_LEFT" value="1"/>
+        <enum name="TOP_TO_BOTTOM" value="2"/>
+        <enum name="BOTTOM_TO_TOP" value="3"/>
+    </attr>
 </declare-styleable>
 ```
 
@@ -77,7 +83,6 @@ XML
 <com.rtugeek.android.colorseekbar.AlphaSeekBar 
     android:id="@+id/alphaSeekBar"
     android:layout_width="match_parent" 
-    app:colorSeeds="@array/material_colors"
     android:layout_height="wrap_content" />
 ```
 

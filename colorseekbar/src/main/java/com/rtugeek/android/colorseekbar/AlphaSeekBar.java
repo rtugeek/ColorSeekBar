@@ -24,11 +24,13 @@ public class AlphaSeekBar extends BaseSeekBar {
     private float mGridSize = 30;
     private final RectF mGrid = new RectF(0, 0, mGridSize, mGridSize);
 
+    public enum Direction {LEFT_TO_RIGHT, RIGHT_TO_LEFT, TOP_TO_BOTTOM, BOTTOM_TO_TOP}
+
     private final int GRID_WHITE = Color.WHITE;
     private final int GRID_GREY = 0xFFEDEDED;
 
     private OnAlphaChangeListener listener;
-
+    private Direction direction;
     private boolean mShowGrid = true;
     private final Path mClipPath = new Path();
 
@@ -64,18 +66,23 @@ public class AlphaSeekBar extends BaseSeekBar {
         barHeight = a.getDimensionPixelSize(R.styleable.AlphaSeekBar_alphaSeekBarHeight, 12);
         borderColor = a.getColor(R.styleable.AlphaSeekBar_alphaSeekBarBorderColor, Color.BLACK);
         borderRadius = a.getDimensionPixelSize(R.styleable.AlphaSeekBar_alphaSeekBarRadius, barHeight / 2);
-        borderSize = a.getDimensionPixelSize(R.styleable.AlphaSeekBar_alphaSeekBarBorderSize, 1);
+        borderSize = a.getDimensionPixelSize(R.styleable.AlphaSeekBar_alphaSeekBarBorderSize, 0);
         mGridSize = a.getDimension(R.styleable.AlphaSeekBar_alphaSeekBarSizeGrid, 30);
         mShowGrid = a.getBoolean(R.styleable.AlphaSeekBar_alphaSeekBarShowGrid, true);
         maxProgress = a.getInteger(R.styleable.AlphaSeekBar_alphaSeekBarMaxProgress, 255);
-
+        direction = Direction.values()[a.getInt(R.styleable.AlphaSeekBar_alphaSeekBarDirection, 1)];
         setBarHeight(a.getDimensionPixelSize(R.styleable.AlphaSeekBar_alphaSeekBarHeight, dp2px(10)));
         a.recycle();
 
         mGridRectPaint = new Paint();
         mGridRectPaint.setAntiAlias(true);
         if (thumbDrawer == null) {
-            setThumbDrawer(new DefaultThumbDrawer(dp2px(6), Color.BLACK, Color.WHITE));
+            int minThumbSize = dp2px(16);
+            int defaultThumbSize = barHeight + dp2px(8);
+            DefaultThumbDrawer thumbDrawer = new DefaultThumbDrawer(Math.max(minThumbSize, defaultThumbSize), Color.WHITE, Color.BLACK);
+            thumbDrawer.setRingSize(dp2px(2));
+            thumbDrawer.setRingBorderSize(dp2px(1));
+            setThumbDrawer(thumbDrawer);
         }
     }
 
@@ -137,8 +144,18 @@ public class AlphaSeekBar extends BaseSeekBar {
             }
             canvas.restore();
         }
-
+        canvas.save();
+        if (isVertical()) {
+            if (direction == Direction.BOTTOM_TO_TOP) {
+                canvas.scale(1f, -1f, getWidth() / 2f, getHeight() / 2f);
+            }
+        } else {
+            if (direction == Direction.RIGHT_TO_LEFT) {
+                canvas.scale(-1f, 1f, getWidth() / 2f, getHeight() / 2f);
+            }
+        }
         canvas.drawRoundRect(barRect, borderRadius, borderRadius, barRectPaint);
+        canvas.restore();
         //
         //draw color bar
         if (borderSize > 0) {
@@ -175,7 +192,17 @@ public class AlphaSeekBar extends BaseSeekBar {
     }
 
     public int getAlphaValue() {
-        return (int) (progress / (float) maxProgress * 255);
+        float percent = progress / (float) maxProgress;
+        if (isVertical()) {
+            if (direction == Direction.BOTTOM_TO_TOP) {
+                percent = 1 - percent;
+            }
+        } else {
+            if (direction == Direction.RIGHT_TO_LEFT) {
+                percent = 1 - percent;
+            }
+        }
+        return (int) (percent * 255);
     }
 
     public void setAlphaValue(@IntRange(from = 0, to = 255) int alpha) {
@@ -183,6 +210,15 @@ public class AlphaSeekBar extends BaseSeekBar {
         if (listener != null) {
             listener.onAlphaChangeListener(progress, getAlphaValue());
         }
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+        invalidate();
     }
 
     /**

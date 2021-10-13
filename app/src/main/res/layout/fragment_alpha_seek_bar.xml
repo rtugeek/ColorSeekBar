@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="200dp"
         android:layout_margin="6dp"
-        />
+        app:alphaSeekBarHeight="2dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -52,6 +52,7 @@
             android:text="vertical" />
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

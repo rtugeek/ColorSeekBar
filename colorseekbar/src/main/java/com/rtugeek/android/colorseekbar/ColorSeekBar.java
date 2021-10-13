@@ -97,6 +97,7 @@ public class ColorSeekBar extends BaseSeekBar {
             mColorSeeds = getColorsById(colorsId);
         }
 
+
         if (thumbDrawer == null) {
             int minThumbSize = dp2px(16);
             int defaultThumbSize = barHeight + dp2px(8);

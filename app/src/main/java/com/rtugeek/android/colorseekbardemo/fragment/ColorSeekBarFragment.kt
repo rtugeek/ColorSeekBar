@@ -96,13 +96,6 @@ class ColorSeekBarFragment : Fragment() {
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
             override fun onStopTrackingTouch(seekBar: SeekBar) {}
         })
-
-        lifecycleScope.launch {
-            delay(3000)
-            colorSeekBar.maxProgress = 1000
-            colorSeekBar.color = -16604467
-            println(colorSeekBar.color)
-        }
     }
 
     override fun onStop() {
