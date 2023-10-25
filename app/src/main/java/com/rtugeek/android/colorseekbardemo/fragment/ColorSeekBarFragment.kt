@@ -2,19 +2,17 @@ package com.rtugeek.android.colorseekbardemo.fragment
 
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import com.rtugeek.android.colorseekbar.thumb.DefaultThumbDrawer
 import com.rtugeek.android.colorseekbardemo.Utils
 import com.rtugeek.android.colorseekbardemo.databinding.FragmentColorSeekBarBinding
 import kotlinx.android.synthetic.main.fragment_color_seek_bar.*
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 /**
  * A placeholder fragment containing a simple view.
@@ -61,7 +59,6 @@ class ColorSeekBarFragment : Fragment() {
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
             override fun onStopTrackingTouch(seekBar: SeekBar) {}
         })
-
 
         seek_thumb_size.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {

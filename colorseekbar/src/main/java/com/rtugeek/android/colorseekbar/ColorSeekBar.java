@@ -11,11 +11,9 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.os.Build;
-import android.os.Parcelable;
 import android.util.AttributeSet;
 
 import androidx.annotation.ArrayRes;
-import androidx.annotation.Nullable;
 
 import com.rtugeek.android.colorseekbar.thumb.DefaultThumbDrawer;
 
@@ -72,7 +70,6 @@ public class ColorSeekBar extends BaseSeekBar {
         super(context, attrs, defStyleAttr, defStyleRes);
         applyStyle(context, attrs, defStyleAttr, defStyleRes);
     }
-
 
     private void applyStyle(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         mContext = context;
@@ -231,10 +228,11 @@ public class ColorSeekBar extends BaseSeekBar {
     }
 
     /**
+     * get color by progress value
      * @param progress
-     * @return color
+     * @return return Integer.MAX_VALUE if progress out of bounds
      */
-    private int pickColor(int progress) {
+    public int getColor(int progress) {
         if (progress < 0) return Integer.MAX_VALUE;
         if (progress > maxProgress) return Integer.MAX_VALUE;
         if (progress >= getColors().size()) return Integer.MAX_VALUE;
@@ -264,7 +262,7 @@ public class ColorSeekBar extends BaseSeekBar {
      * @return
      */
     public int getColor() {
-        return pickColor(progress);
+        return getColor(progress);
     }
 
 
